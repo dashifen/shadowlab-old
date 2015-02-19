@@ -11,13 +11,9 @@ $runner->register();
 $config = function() use ($path) { return require $path . "/config.php"; };
 $configuration = $config();
 
-$x=1;
-
-$di_container_builder = new \Aura\Di\ContainerBuilder();
-$di = $di_container_builder->newInstance(["config" => $config], $configuration["config_classes"], \Aura\Di\ContainerBuilder::DISABLE_AUTO_RESOLVE);
-
+$builder = new \Aura\Di\ContainerBuilder();
+$di = $builder->newInstance(["config" => $config], $configuration["config_classes"]);
 $db = $di->newInstance('Shadowlab\Database\Database');
-
 var_dump($db);
 
 //$dispatcher = $di->newInstance('Shadowlab\Dispatcher\Dispatcher');

@@ -27,11 +27,7 @@ class Dependencies extends Config
             'password' => $dbconfig['pass'],
             'database' => $dbconfig['name'],
             'port'     => $dbconfig['port'],
-            'socket'   => ini_get("mysqli.default_socket")
-        ];
-
-       $di->params['Shadowlab\Database\AbsractMysqlDatabase'] = [
-            'db' => $di->lazyNew('mysqli')
+            'socket'   => ''
         ];
 
         $di->params['Shadowlab\Database\Database'] = [
