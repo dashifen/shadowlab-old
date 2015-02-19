@@ -1,0 +1,31 @@
+{
+  "name": "dashifen/shadowlab",
+  "description": "An application reading from a private database of information related to the table-top roleplaying game Shadowrun Fifth Edition for my use during game mastering sessions. Yes, I'm really this much of a nerd.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+
+  "authors": [
+    {
+      "name": "David Dashifen Kees",
+      "email": "dashifen@dashifen.com"
+    }
+  ],
+
+  "autoload": {
+    "psr-4" : {
+      "Shadowlab\\" : "src/"
+    }
+  },
+
+  "require": {
+    "aura/di":     "~2.1",
+    "aura/router": "~2.2",
+    "aura/web":    "~2.0",
+    "aura/view":   "~2.0"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit":      "~4.4",
+    "brandonsavage/booboo": "~0.4"
+  }
+}
