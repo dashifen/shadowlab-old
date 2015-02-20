@@ -2,13 +2,13 @@
 
 namespace Shadowlab\Dispatcher;
 
+use Aura\Web\Response;
 use Aura\Di\Container;
 use Aura\Di\Exception\SetterMethodNotFound;
-use Aura\Web\Response;
 use Shadowlab\Exceptions\ActionException;
-use Shadowlab\Interfaces\Routes\AbstractRoute;
-use Shadowlab\Router\Router;
+use Shadowlab\Interfaces\Route\AbstractRoute;
 use Shadowlab\Session\Session;
+use Shadowlab\Router\Router;
 
 /**
  * Class Dispatcher
@@ -66,8 +66,8 @@ class Dispatcher
         // of where they are right now so we can return them to the route they wished to follow after
         // authenticating.
 
-        if($route === false) $this->notFound();
-        elseif(!$route->isPublic() && !$this->session->isAuthenticated()) $this->unauthorized($route);
+        if ($route === false) $this->notFound();
+        elseif ($route->isPrivate() && !$this->session->isAuthenticated()) $this->unauthorized($route);
         else {
             // if we're here, then we're ready to respond to the requested route.  we'll get the
             // action that handles it and use our Container to get a new instance of it and call it's
@@ -100,7 +100,7 @@ class Dispatcher
      */
     public function unauthorized(AbstractRoute $route)
     {
-        $this->session->setAfterLoginReturnTo($route->getPath());
+        $this->session->set('AFTER_LOGIN_RETURN_TO', $route->getPath());
         $this->response->redirect->to("/");
         $this->sendResponse();
     }
@@ -114,13 +114,13 @@ class Dispatcher
         // is the result of an Action while the latter is the result of calling one of the above two
         // methods.
 
-        if($response === null) $response = $this->response;
+        if ($response === null) $response = $this->response;
         header($response->status->get(), true, $response->status->getCode());
 
         $headers = $response->headers->get();
         $cookies = $response->cookies->get();
-        foreach($headers as $label => $value) header("{$label}: {$value}");
-        foreach($cookies as $name => $cookie) setcookie($name, ...$cookie);
+        foreach ($headers as $label => $value) header("{$label}: {$value}");
+        foreach ($cookies as $name => $cookie) setcookie($name, ...$cookie);
         header("Connection: close");
 
         echo $response->content->get();

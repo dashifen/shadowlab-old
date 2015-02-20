@@ -1,6 +1,6 @@
 <?php
 
-namespace Shadowlab\Database;
+namespace Shadowlab\Interfaces\Database;
 
 use Shadowlab\Exceptions\DatabaseException;
 
@@ -24,7 +24,7 @@ abstract class AbstractMysqlDatabase implements DatabaseInterface, MysqlInterfac
     /**
      * @param \mysqli $db
      */
-    public function __constrcut(\mysqli $db)
+    public function __construct(\mysqli $db)
     {
         $this->db = $db;
     }
@@ -88,5 +88,7 @@ abstract class AbstractMysqlDatabase implements DatabaseInterface, MysqlInterfac
     abstract public function update($table, array $values, array $criteria = []);
     abstract public function delete($table, array $criteria = [], $limit = null, $offset = null);
     abstract public function upsert($table, array $values, array $updates = []);
+    abstract public function getEnumValues($table, $column);
+    abstract public function getColumns($table);
 }
 

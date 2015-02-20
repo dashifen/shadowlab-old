@@ -1,14 +1,15 @@
 <?php
 
-namespace Shadowlab\Database;
+namespace Shadowlab\Interfaces\Database;
 
 interface DatabaseInterface
 {
+    public function isConnected();
     public function getDatabase();
     public function setDatabase($database);
+    public function getColumns($table);
     public function getAffectedRows();
     public function getInsertedId();
-    public function isConnected();
 
     public function runQuery($query);
 

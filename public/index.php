@@ -13,8 +13,5 @@ $configuration = $config();
 
 $builder = new \Aura\Di\ContainerBuilder();
 $di = $builder->newInstance(["config" => $config], $configuration["config_classes"]);
-$db = $di->newInstance('Shadowlab\Database\Database');
-var_dump($db);
-
-//$dispatcher = $di->newInstance('Shadowlab\Dispatcher\Dispatcher');
-//$dispatcher->dispatch();
+$dispatcher = $di->newInstance('Shadowlab\Dispatcher\Dispatcher');
+$dispatcher->dispatch();

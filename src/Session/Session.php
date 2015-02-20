@@ -2,47 +2,86 @@
 
 namespace Shadowlab\Session;
 
-use Shadowlab\Exceptions\SessionException;
+use Shadowlab\Interfaces\SessionInterface;
 
 /**
  * Class Session
  * @package Shadowlab\Session
  */
-class Session extends AbstractSession
+class Session implements SessionInterface
 {
     /**
-     * @param string $function
-     * @param array $arguments
-     * @throws SessionException
+     *
+     */
+    public function __construct()
+    {
+        if(session_id()=="") session_start();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuthenticated()
+    {
+        return $this->exists('AUTHENTICATED');
+    }
+
+    /**
+     * Initializes a visitor's authenticated session.
+     * @param string $username
+     * @param null $role
+     * @return void
+     */
+    public function login($username, $role = null)
+    {
+        session_regenerate_id();
+        $_SESSION['AUTHENTICATED'] = true;
+        $_SESSION['USERNAME'] = $username;
+        $_SESSION['ROLE'] = $role;
+    }
+
+    /**
+     * Completely destroys a visitor's session.
+     * @return void
+     */
+    public function logout()
+    {
+        // when logging out, we want to explicitly and completely destroy this person's session.
+        // according to the PHP manual, this is the best way to do that (see: http://goo.gl/nBVl0
+        // for more information).
+
+        $_SESSION = [];
+        $p = session_get_cookie_params();
+        setcookie(session_name(), "", time()-42000, $p["path"], $p["domain"], $p["secure"], $p["httponly"]);
+        session_destroy();
+    }
+
+    /**
+     * @param $index
      * @return mixed
      */
-    public function __call($function, array $arguments = [])
+    public function get($index)
     {
-        // this method is called whenever an attempt to call a different but inaccessible, including non-existent,
-        // method is made.  the only things that we want to handle here, though, are methods that begin with either
-        // set* or get* so we're going to chunk up the $function argument, which is the method someone tried to
-        // use, and see if it matches.
-
-        $action = substr($function, 0, 3);
-        if($action != "get" && $action != "set") throw new SessionException("Invalid session action: {$action}");
-
-        $index  = strtoupper(substr($function, 3));
-        $retval = $action == "set"
-            ? $this->set($index, $arguments)
-            : $this->get($index);
-
+        $retval = isset($_SESSION[$index]) ? $_SESSION[$index] : null;
+        if($retval === null) trigger_error("Undefined index: {$index}");
         return $retval;
     }
 
-    protected function get($index)
+    /**
+     * @param $index
+     * @return bool
+     */
+    public function exists($index)
     {
-        $retval = null;
-        if(!isset($_SESSION[$index])) trigger_error("Undefined index: {$index}");
-        else $retval = $_SESSION[$index];
-        return $retval;
+        return isset($_SESSION[$index]);
     }
 
-    protected function set($index, $value)
+    /**
+     * @param $index
+     * @param $value
+     * @return mixed
+     */
+    public function set($index, $value)
     {
         return $_SESSION[$index] = $value;
     }

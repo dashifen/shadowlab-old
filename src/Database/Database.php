@@ -3,6 +3,7 @@
 namespace Shadowlab\Database;
 
 use Shadowlab\Exceptions\DatabaseException;
+use Shadowlab\Interfaces\Database\AbstractMysqlDatabase;
 
 /**
  * Class Database
@@ -43,7 +44,7 @@ class Database extends AbstractMysqlDatabase
      */
     public function runQuery($query)
     {
-        if(sizeof($this->types) == sizeof($this->bindings)) {
+        if(($type_count = sizeof($this->types)) == sizeof($this->bindings)) {
             // as long as we have the same number of types as we do bindings, we're good to go.
             // since types is, currently, an array but the bind_param() method expects a string,
             // we'll join that one.  but, it wants the individual values to be bound into the
@@ -51,9 +52,13 @@ class Database extends AbstractMysqlDatabase
             // them to the method.
 
             try {
-                $types = join('', $this->types);
                 $statement = $this->db->prepare($query);
-                $statement->bind_param($types, ...$this->bindings);
+
+                if($type_count > 0) {
+                    $types = join('', $this->types);
+                    $statement->bind_param($types, ...$this->bindings);
+                }
+
                 $success = $statement->execute();
             } catch (\Exception $e) {
                 // if we couldn't execute our query, we want to re-throw this exception but with a
@@ -300,6 +305,47 @@ class Database extends AbstractMysqlDatabase
         return $results !== false
             ? $this->getAffectedRows()
             : false;
+    }
+
+    public function getColumns($table)
+    {
+        $this->resetQuery();
+
+        // to show the columns in a MySQL database we need to run a SHOW COLUMNS FROM $table query.
+        // none of the functions above build such a query, so we'll just run it directly here.
+
+        $this->setTypesAndBindings([$table]);
+        $results = $this->runQuery("SHOW COLUMNS FROM ?");
+        if($results === false) return false;
+
+        // if we're still here then we've received results from the runQuery() method.  those results
+        // contain information about the columns in our table.  the first index of the rows in that set
+        // are the column names.  so, we'll quickly extract those data and send them to the caller.
+
+        $columns = [];
+        $results = $results->fetch_all(MYSQL_NUM);
+        foreach($results as $row) $columns = $results[0];
+        return $columns;
+    }
+
+    public function getEnumValues($table, $column)
+    {
+        // like the previous method, this one needs to run a SHOW COLUMNS query.  we'll build it here
+        // and run it above and then we'll need to do a little more manipulation to extract our enum
+        // values.
+
+        $this->resetQuery();
+        $this->setTypesAndBindings([$table, $column]);
+        $results = $this->runQuery("SHOW COLUMNS FROM ? LIKE ?");
+        if($results === false) return false;
+
+        // the first index of the $results is the structure of our enum column.  it's in the form of
+        // enum('a','b','c',...,'z').  we want to extract those values as an array and, to do that, we
+        // can use some string replacements and an explode.
+
+        $results = $results->fetch_row();
+        $results = str_replace("'", "", str_replace("enum(", "", substr($results[1], 0, strlen($results[1])-1)));
+        return explode(",", $results);
     }
 
     /**

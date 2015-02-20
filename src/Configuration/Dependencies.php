@@ -34,12 +34,12 @@ class Dependencies extends Config
             'db' => $di->lazyNew('mysqli')
         ];
 
-        /*$di->params['Shadowlab\Dispatcher\Dispatcher'] = [
+        $di->params['Shadowlab\Dispatcher\Dispatcher'] = [
             'container' => $di,
             'response'  => $di->lazyNew('Aura\Web\Response'),
             'session'   => $di->lazyNew('Shadowlab\Session\Session'),
             'router'    => $di->lazyNew('Shadowlab\Router\Router')
-        ];*/
+        ];
 
 
 
