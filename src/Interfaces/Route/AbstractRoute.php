@@ -6,7 +6,7 @@ namespace Shadowlab\Interfaces\Route;
  * Class AbstractRoute
  * @package Shadowlab\Interfaces\Route
  */
-abstract class AbstractRoute implements RouteInterface
+abstract class AbstractRoute implements Route
 {
     /**
      * @var string

@@ -6,7 +6,7 @@ namespace Shadowlab\Interfaces\Route;
  * Interface RouteInterface
  * @package Shadowlab\Interfaces\Route
  */
-interface RouteInterface
+interface Route
 {
     /**
      * @param string $path

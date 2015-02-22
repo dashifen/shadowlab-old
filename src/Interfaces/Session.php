@@ -6,11 +6,7 @@ namespace Shadowlab\Interfaces;
  * Interface SessionInterface
  * @package Shadowlab\Interfaces\Session
  */
-/**
- * Interface SessionInterface
- * @package Shadowlab\Interfaces\Session
- */
-interface SessionInterface
+interface Session
 {
     /**
      * @return bool

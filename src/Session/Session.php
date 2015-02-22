@@ -2,13 +2,11 @@
 
 namespace Shadowlab\Session;
 
-use Shadowlab\Interfaces\SessionInterface;
-
 /**
  * Class Session
  * @package Shadowlab\Session
  */
-class Session implements SessionInterface
+class Session implements \Shadowlab\Interfaces\Session
 {
     /**
      *

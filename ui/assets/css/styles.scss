@@ -1,0 +1,37 @@
+@import "framework/normalize";
+@import "framework/boilerplate";
+@import "sections/header";
+@import "sections/mainmenu";
+@import "sections/main";
+@import "sections/footer";
+
+html {
+	box-sizing: border-box;
+	background: url("../images/background-light.jpg") repeat;
+	font: 15px/1.33 'Droid Sans', sans-serif;
+	height: 100%;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+	height: 100%;
+	margin: 0 auto;
+	max-width: 1050px;
+	overflow: hidden;
+	width: 90%;
+}
+
+em {
+	font-family: 'Droid Serif', serif;
+	font-size: .9em;							/* em sizing is intentional */
+}
+
+
+
+
+
+
+

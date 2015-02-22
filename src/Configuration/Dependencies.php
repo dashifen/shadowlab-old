@@ -41,6 +41,11 @@ class Dependencies extends Config
             'router'    => $di->lazyNew('Shadowlab\Router\Router')
         ];
 
+        $di->params['Shadowlab\Pages\Page'] = [
+            'header' => $di->lazyNew('Shadowlab\Pages\Files\File', ['file' => $config['layout']['header']]),
+            'footer' => $di->lazyNew('Shadowlab\Pages\Files\File', ['file' => $config['layout']['footer']]),
+        ];
+
 
 
 

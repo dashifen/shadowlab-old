@@ -37,7 +37,7 @@ class Routes extends Config
         // not accidentally changed within it.
 
         $di->params['Shadowlab\Router\Router'] = [
-            'server' => $_SERVER,
+            'server' => $di->lazyNew('Aura\Web\Request\Values', ['input' => $_SERVER]),
             'routes' => $temp
         ];
     }

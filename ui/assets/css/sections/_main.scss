@@ -1,0 +1,34 @@
+main {
+	background: #fff;
+	border: 1px solid #000;
+	border-top-right-radius: 1rem;
+	border-bottom-left-radius: 1rem;
+	margin: 2rem;
+	min-height: 150px;
+	padding: 2rem;
+	position: relative;
+	
+	&:before {
+		background: url("../images/bar.png") no-repeat;
+		content: " ";
+		display: inline-block;
+		height: 100px;
+		left: -20px;
+		position: absolute;
+		top: -20px;
+		width: 100px;
+	}
+	
+	&:after {
+		background: url("../images/bar.png") no-repeat;
+		bottom: -20px;
+		content: " ";
+		display: inline-block;
+		height: 100px;
+		right: -20px;
+		position: absolute;
+		width: 100px;
+		transform: rotate(180deg);
+	}
+	
+}

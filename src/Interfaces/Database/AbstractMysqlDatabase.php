@@ -8,7 +8,7 @@ use Shadowlab\Exceptions\DatabaseException;
  * Class AbstractMysqlDatabase
  * @package Shadowlab\Interfaces\Databases
  */
-abstract class AbstractMysqlDatabase implements DatabaseInterface, MysqlInterface
+abstract class AbstractMysqlDatabase implements Database, Mysql
 {
     /**
      * @var \mysqli $db
@@ -19,7 +19,7 @@ abstract class AbstractMysqlDatabase implements DatabaseInterface, MysqlInterfac
      * The default value of this property should match the one in config.php.
      * @var string $database
      */
-    protected $database = 'dashifen_shadowlab';
+    protected $database = 'dashifen_slapp';     // slapp == shadowlab app
 
     /**
      * @param \mysqli $db

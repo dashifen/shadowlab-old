@@ -2,16 +2,16 @@
 
 namespace Shadowlab\Exceptions;
 
-use Shadowlab\Interfaces\Routes\AbstractRoute;
+use Shadowlab\Interfaces\Route\Route;
 
 class ActionException extends \Exception
 {
     /**
-     * @var \Shadowlab\Router\Route\GetRoute|\Shadowlab\Router\Route\GetRoute
+     * @var Route
      */
     protected $route;
 
-    public function __construct($message, AbstractRoute $route, \Exception $previous = null)
+    public function __construct($message, Route $route, \Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
         $this->setRoute($route);

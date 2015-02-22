@@ -2,8 +2,9 @@
 
 namespace Shadowlab\Router;
 
+use Aura\Web\Request\Values;
 use Shadowlab\Exceptions\RouteException;
-use Shadowlab\Interfaces\Route\RouteInterface;
+use Shadowlab\Interfaces\Route\Route;
 
 /**
  * Class Router
@@ -25,14 +26,14 @@ class Router
     protected $type   = '';
 
     /**
-     * @param array $server
+     * @param Values $server
      * @param array $routes
      * @throws RouteException
      */
-    public function __construct(array $server, array $routes = [])
+    public function __construct(Values $server, array $routes = [])
     {
-        $this->type = $server["REQUEST_METHOD"];
-        $this->path = parse_url($server["REQUEST_URI"], PHP_URL_PATH);
+        $this->type = $server->get("REQUEST_METHOD");
+        $this->path = parse_url($server->get("REQUEST_URI"), PHP_URL_PATH);
         foreach ($routes as $route) $this->addRoute($route);
     }
 
@@ -53,10 +54,10 @@ class Router
     }
 
     /**
-     * @param RouteInterface $route
+     * @param Route $route
      * @throws RouteException
      */
-    public function addRoute(RouteInterface $route)
+    public function addRoute(Route $route)
     {
         // this application only functions when each route contains a unique path.  therefore, before we
         // ad this $route to the list of $routes, we'll double check to be sure it's unique and, if not

@@ -7,7 +7,7 @@ use Aura\Di\Container;
 use Aura\Di\Exception\SetterMethodNotFound;
 use Shadowlab\Exceptions\ActionException;
 use Shadowlab\Interfaces\Route\AbstractRoute;
-use Shadowlab\Session\Session;
+use Shadowlab\Interfaces\Session;
 use Shadowlab\Router\Router;
 
 /**

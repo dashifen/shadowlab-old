@@ -1,0 +1,81 @@
+nav.mainmenu {
+	/* the sytles for the nav bar (i.e. background colors, etc.) are in ../_header.scss */
+	
+	ul {
+		list-style-type: none;
+		margin:  0;
+		padding: 0;
+	}
+	
+	ul:not(.submenu) {
+		margin: -49px 3rem 0 0;
+		position: relative;
+		text-align: right;
+		z-index: 10;
+		
+		& > li {
+			display: inline-block;
+			position: relative; 
+			
+			a {
+				color: #fff;
+				display: inline-block;
+				height: 3rem;
+				line-height: 3rem;
+				padding: 0 2rem;
+				
+				&:active, &:focus, &:hover {
+					color: #FF0;
+				}
+			}
+			
+			& > a {				
+				&:active, &:focus, &:hover {
+					background-color: #1A609E;
+				}
+			}
+			
+			&:hover {
+				ul.submenu {
+					display: block;	
+				}
+				
+				& > a {
+					background-color: #1A609E;
+				}
+			}
+		}
+		
+		li:last-child ul.submenu {
+			right: 0;	
+			left: auto;
+			
+			
+		}
+	}
+	
+	ul.submenu {
+		background-color: #1A609E;
+		border-bottom-left-radius: 1rem;
+		border-bottom-right-radius: 1rem;
+		display: none;
+		left: 0;
+		position: absolute;
+		text-align: left;
+		top: 100%;
+		
+		li:last-child a {
+			border-bottom-left-radius: 1rem;
+			border-bottom-right-radius: 1rem;
+		}
+		
+		a {
+			white-space: nowrap;
+			width: 100%;
+			
+			&:active, &:focus, &:hover {
+				color: #FF0;
+			}
+		}
+	}
+}

@@ -2,7 +2,7 @@
 
 namespace Shadowlab\Interfaces\Database;
 
-interface DatabaseInterface
+interface Database
 {
     public function isConnected();
     public function getDatabase();
