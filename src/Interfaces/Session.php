@@ -27,9 +27,10 @@ interface Session
 
     /**
      * @param $index
+     * @param $default
      * @return mixed
      */
-    public function get($index);
+    public function get($index, $default = null);
 
     /**
      * @param $index

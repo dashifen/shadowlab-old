@@ -2,11 +2,11 @@
 
 namespace Shadowlab\Dispatcher;
 
-use Aura\Web\Response;
 use Aura\Di\Container;
 use Aura\Di\Exception\SetterMethodNotFound;
 use Shadowlab\Exceptions\ActionException;
 use Shadowlab\Interfaces\Route\AbstractRoute;
+use Shadowlab\Interfaces\Response\Response;
 use Shadowlab\Interfaces\Session;
 use Shadowlab\Router\Router;
 
@@ -78,21 +78,21 @@ class Dispatcher
                 $action = $route->getAction();
                 $action = $this->container->newInstance($action);
                 $response = $action->execute();
-                $this->sendResponse($response);
             } catch (SetterMethodNotFound $e) {
                 throw new ActionException("Action not found", $route, $e);
             }
         }
+
+        if (!isset($response)) {
+            $response = $this->response;
+        }
+
+        $this->sendResponse($response);
     }
 
-    /**
-     * @throws \Aura\Web\Exception\InvalidStatusCode
-     */
     public function notFound()
     {
-        $this->response->status->setCode(404);
-        $this->response->content->set("File Not Found");
-        $this->sendResponse();
+       $this->response->handle404();
     }
 
     /**
@@ -101,28 +101,15 @@ class Dispatcher
     public function unauthorized(AbstractRoute $route)
     {
         $this->session->set('AFTER_LOGIN_RETURN_TO', $route->getPath());
-        $this->response->redirect->to("/");
-        $this->sendResponse();
+        $this->response->unauthorized();
     }
 
     /**
      * @param Response $response
      */
-    protected function sendResponse(Response $response = null)
+    protected function sendResponse(Response $response)
     {
-        // if we weren't passed a different $response, then we'll use $this->response.  the former
-        // is the result of an Action while the latter is the result of calling one of the above two
-        // methods.
-
-        if ($response === null) $response = $this->response;
-        header($response->status->get(), true, $response->status->getCode());
-
-        $headers = $response->headers->get();
-        $cookies = $response->cookies->get();
-        foreach ($headers as $label => $value) header("{$label}: {$value}");
-        foreach ($cookies as $name => $cookie) setcookie($name, ...$cookie);
-        header("Connection: close");
-
-        echo $response->content->get();
+        $response->setData([ 'isAuthenticated' => $this->session->isAuthenticated() ]);
+        $response->send();
     }
 }

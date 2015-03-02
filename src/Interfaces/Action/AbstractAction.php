@@ -2,10 +2,11 @@
 
 namespace Shadowlab\Interfaces\Action;
 
-use Aura\Web\Response;
-use Shadowlab\Interfaces\Session;
+use Aura\Web\Request;
 use Shadowlab\Interfaces\Domain\Domain;
-use Shadowlab\Pages\Page;
+use Shadowlab\Interfaces\Response\Response;
+use Shadowlab\Interfaces\Session;
+
 
 abstract class AbstractAction implements Action
 {
@@ -15,9 +16,14 @@ abstract class AbstractAction implements Action
     protected $domain;
 
     /**
-     * @var Response
+     * @var Response;
      */
-    protected $response;
+    protected $http;
+
+    /**
+     * @var Request
+     */
+    protected $request;
 
     /**
      * @var Session
@@ -25,26 +31,21 @@ abstract class AbstractAction implements Action
     protected $session;
 
     /**
-     * @var Page
-     */
-    protected $page;
-
-    /**
      * @param Domain $domain
-     * @param Response $response
+     * @param Request $request
      * @param Session $session
-     * @param Page $page
+     * @param Response $http
      */
     public function __construct(
-        Domain $domain,
-        Response $response,
-        Session $session,
-        Page $page
+        Domain   $domain,
+        Request  $request,
+        Session  $session,
+        Response $http
     ) {
-        $this->domain   = $domain;
-        $this->response = $response;
-        $this->session  = $session;
-        $this->page     = $page;
+        $this->domain  = $domain;
+        $this->request = $request;
+        $this->session = $session;
+        $this->http    = $http;
     }
 
     abstract public function execute();

@@ -1,0 +1,40 @@
+i.fa span {
+    @extend .visuallyhidden;
+}
+
+.w5   { width:   5%; }
+.w10  { width:  10%; }
+.w15  { width:  15%; }
+.w20  { width:  20%; }
+.w25  { width:  25%; }
+.w33  { width:  33%; }
+.w50  { width:  50%; }
+.w66  { width:  66%; }
+.w75  { width:  75%; }
+.w80  { width:  80%; }
+.w85  { width:  85%; }
+.w90  { width:  90%; }
+.w100 { width: 100%; }
+.icon { width: 32px; }
+
+.small  { height: 5rem; }
+.medium { height: 10rem; }
+.large  { height: 15rem; }
+
+.fleft  { float: left;  padding-right: 1rem; }
+.fright { float: right; padding-left:  1rem; }
+.cboth  { clear: both;  }
+.cleft  { clear: left;  }
+.cright { clear: right; }
+
+.mart { margin-top:     1rem; }
+.marl { margin-left:    1rem; }
+.marr { margin-right:   1rem; }
+.marb { margin-bottom:  1rem; }
+.padt { padding-top:    1rem; }
+.padl { padding-left:   1rem; }
+.padr { padding-right:  1rem; }
+.padb { padding-bottom: 1rem; }
+
+.nomar { margin:  0; }
+.nopad { padding: 0; }

@@ -2,9 +2,7 @@ nav.mainmenu {
 	/* the sytles for the nav bar (i.e. background colors, etc.) are in ../_header.scss */
 	
 	ul {
-		list-style-type: none;
-		margin:  0;
-		padding: 0;
+		@extend .no-list;
 	}
 	
 	ul:not(.submenu) {

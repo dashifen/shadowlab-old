@@ -21,4 +21,6 @@ interface Database
     public function insert($table, array $values);
     public function update($table, array $values, array $criteria = []);
     public function delete($table, array $criteria = [], $limit = null, $offset = null);
+
+    public function setDistinct($distinct);
 }

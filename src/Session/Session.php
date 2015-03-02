@@ -2,11 +2,13 @@
 
 namespace Shadowlab\Session;
 
+use Shadowlab\Interfaces\Session as SessionInterface;
+
 /**
  * Class Session
  * @package Shadowlab\Session
  */
-class Session implements \Shadowlab\Interfaces\Session
+class Session implements SessionInterface
 {
     /**
      *
@@ -56,12 +58,12 @@ class Session implements \Shadowlab\Interfaces\Session
 
     /**
      * @param $index
+     * @param $default
      * @return mixed
      */
-    public function get($index)
+    public function get($index, $default = null)
     {
-        $retval = isset($_SESSION[$index]) ? $_SESSION[$index] : null;
-        if($retval === null) trigger_error("Undefined index: {$index}");
+        $retval = $this->exists($index) ? $_SESSION[$index] : $default;
         return $retval;
     }
 

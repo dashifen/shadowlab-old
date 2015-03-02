@@ -364,6 +364,7 @@ class Database extends AbstractMysqlDatabase
         // single column as well as a set of columns to select as follows.
 
         $query  = "SELECT ";
+        if($this->distinct) $query .= "DISTINCT ";
         $query .= is_array($columns) ? join(', ', $columns) : $columns;
         $query .= " ";
 
@@ -403,12 +404,12 @@ class Database extends AbstractMysqlDatabase
         foreach($criteria as $column => $value) {
             // most of the time, $value is a scalar value representing the value that $column must have
             // to satisfy this part of our WHERE clause.  but, if $value is an array, then the first index
-            // is the value to match against column and the second is the comparison that we're making
-            // against that value.  those comparisons are equal, not-equal, less than, less than or equal
-            // to, greater than or equal to, greater than, LIKE, and IN.
+            // is the comparison that we're making while the second is the values we use to make it.
+            // those comparisons are equal, not-equal, less than, less than or equal to, greater than or
+            // equal to, greater than, LIKE, and IN.
 
             if(!is_array($value)) $comparison = "=";
-            else list($value, $comparison) = $value;
+            else list($comparison, $value) = $value;
             $this->setTypesAndBindings([$value]);
 
             if(!$this->isValidComparison($value, $comparison)) {

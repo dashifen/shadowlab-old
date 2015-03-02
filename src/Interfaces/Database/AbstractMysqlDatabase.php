@@ -22,6 +22,11 @@ abstract class AbstractMysqlDatabase implements Database, Mysql
     protected $database = 'dashifen_slapp';     // slapp == shadowlab app
 
     /**
+     * @var bool
+     */
+    protected $distinct = false;
+
+    /**
      * @param \mysqli $db
      */
     public function __construct(\mysqli $db)
@@ -77,6 +82,12 @@ abstract class AbstractMysqlDatabase implements Database, Mysql
     public function isConnected()
     {
         return !empty($this->database);
+    }
+
+    public function setDistinct($distinct)
+    {
+        $distinct = $distinct ? true : false;
+        $this->distinct = $distinct;
     }
 
     abstract public function runQuery($query);

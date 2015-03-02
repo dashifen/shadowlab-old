@@ -13,9 +13,9 @@ class Routes extends Config
     {
         $temp = [];
 
-        // because the Dependencies object is configured first, we can use our DI container here
-        // to grab an instance of our Database object.  with it we can grab the routes for this
-        // app out of the database.
+        // because the Database configuration object is configured first, we can use our DI container
+        // here to grab an instance of our Database object.  with it we can grab the routes for this
+        // app out of the database.  we've put them there because it makes this config object prettier.
 
         $db = $di->newInstance('Shadowlab\Database\Database');
         $routes = $db->getResults(['type','path','action','access'], 'routes');
