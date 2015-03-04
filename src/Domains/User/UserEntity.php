@@ -12,7 +12,7 @@ class UserEntity extends AbstractEntity
     protected $reset_vector;
     protected $email_address;
 
-    public function __construct($data)
+    public function __construct(array $data = [])
     {
         $this->setAll($data);
     }

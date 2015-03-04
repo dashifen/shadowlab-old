@@ -13,9 +13,13 @@ class UserGateway extends AbstractGateway
      * @return array|UserEntity|bool
      * @throws EntityException
      */
-    public function select(array $entities)
+    public function select(array $entities = null)
     {
         $users = [];
+
+        if($entities === null) {
+            throw new EntityException("Entities shouldn't be null");
+        }
 
         foreach($entities as $entity) {
             if ($entity instanceof UserEntity) {

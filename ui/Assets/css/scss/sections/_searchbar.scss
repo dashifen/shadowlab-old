@@ -1,0 +1,29 @@
+form.searchbar {
+	fieldset {
+		background-color: #F0FFFF;
+		border-color: #1A609E;
+		
+		label {
+			display: inline-block;
+			margin-right: 1rem;
+		}
+		
+		ol, li {
+			margin-bottom: 0;
+		}
+		
+		li {
+			display: inline;
+			width: auto;
+			
+			&:last-child {
+				float: right;
+				margin-left: 0;	
+				position: relative;
+				top: -1px;
+			}
+		}
+	}
+	
+}
+		

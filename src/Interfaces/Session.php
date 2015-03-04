@@ -44,4 +44,10 @@ interface Session
      * @return bool|mixed
      */
     public function set($index, $value);
+
+    /**
+     * @param $index
+     * @return void
+     */
+    public function remove($index);
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace Shadowlab\Responses\Cheatsheets;
+namespace Shadowlab\Responses\Cheatsheets\Matrix;
 
 use Shadowlab\Interfaces\Response\AbstractResponse;
 
-class Index extends AbstractResponse
+class MatrixActions extends AbstractResponse
 {
     protected function handleFound()
     {
         // when sheets are found, they're in the "sheets" payload.  we'll grab that and send it to
         // the view for display.
 
-        $this->setView('Cheatsheets\Index', [
-            'title'  => 'Cheatsheets',
-            'sheets' => $this->payload->getPayload('sheets'),
+        $this->setView('Cheatsheets\Matrix\MatrixActions', [
+            'actions' => $this->payload->getPayload('actions'),
+            'title'   => 'Matrix Actions',
         ]);
     }
 
@@ -23,6 +23,9 @@ class Index extends AbstractResponse
         // cheatsheets array.  this will display the a not-found message re: the sheets with
         // a 200 status (i.e. not a 404 page).
 
-        $this->setView('Cheatsheets\Index', [ 'cheatsheets' => '' ]);
+        $this->setView('Cheatsheets\Matrix\MatrixActions', [
+            'title'   => 'Actions Not Found',
+            'actions' => ''
+        ]);
     }
 }

@@ -13,84 +13,56 @@ class CheatsheetsGateway extends AbstractGateway
      * @return array|CheatsheetsEntity|bool
      * @throws EntityException
      */
-    public function select(array $entities)
+    public function select(array $entities = null)
     {
-        $users = [];
+        $sheets = [];
 
-        foreach($entities as $entity) {
+        if($entities === null) {
+            throw new EntityException("Entities shouldn't be null");
+        }
+
+        foreach ($entities as $entity) {
             if ($entity instanceof CheatsheetsEntity) {
-                // if we have a UserEntity, then we want to select the user in the database
-                // which matches its data.  we'll get all of its data and then filter out any
-                // that are empty.  then, we try to get everything the database knows about any
-                // user that matches the remaining information.  if we can do so, we add it to
-                // the $users array.  this allows us to, for example, receive a username and
-                // password and return the user account that matches them.
+
+                // to select our list of cheatsheets from the database, our $entity may specify a type to
+                // grab.  if so, we'll use it as a criterion for our SELECT query.  otherwise, we'll just
+                // select them all.
 
                 $data = $entity->getAll();
-                $data = array_filter($data, function($datum) { return !empty($datum); });
-                $user = $this->db->getRow(['*'], "users", $data);
-                if($user !== false) $users[] = $user;
+                $data = array_filter($data, function($x) { return !empty($x); });
+                $cols = ['cheatsheet_id', 'cheatsheet_type','cheatsheet_name'];
+                $temp = $this->db->getResults($cols, 'cheatsheets', $data, array_slice($cols, 1));
+
+                // to avoid sending back the same sheet more than once, we'll real quick loop over our list
+                // of sheets and add them to the $sheets array only if they haven't already been added.  at
+                // this time, our system only selects either all of the sheets or all sheets with a specific
+                // type, so we don't need to worry about this step un-ordering our list of sheets.
+
+                foreach ($temp as $sheet) {
+                    if (!isset($sheets[$sheet['cheatsheet_id']])) {
+                        $sheets[$sheet['cheatsheet_id']] = $sheet;
+                    }
+                }
             } else {
-                throw new EntityException("Unexpected Entity: " . get_class($entity));
+                throw new EntityException("Unexpected entity: " . get_class($entity));
             }
         }
 
-        $retval = false;
-        if (sizeof($users)==1) $retval = $users[0];
-        elseif (sizeof($users)>1) $retval = $users;
-        return $retval;
+        return $sheets;
     }
 
-    /**
-     * @param Entity $entity
-     * @return int|bool
-     * @throws EntityException
-     */
     public function insert(Entity $entity)
     {
-        if (!($entity instanceof CheatsheetsEntity)) {
-            $values = $entity->getAllExcept(['user_id']);
-            $user_id = $this->db->insert("users", $values);
-            return $user_id;
-        }
 
-        // if we didn't return in the if-block above, we didn't have the
-        // right type of entity.  therefore, we'll throw an exception.  this
-        // pattern repeats for the methods below.
-
-        throw new EntityException("Unexpected Entity: " . get_class($entity));
     }
 
-    /**
-     * @param Entity $entity
-     * @return int|bool
-     * @throws EntityException
-     */
     public function update(Entity $entity)
     {
-        if (!($entity instanceof CheatsheetsEntity)) {
-            $values = $entity->getAllExcept(['user_id']);
-            $key = ['user_id' => $entity->get('user_id')];
-            $success = $this->db->update("users", $values, $key);
-            return $success;
-        }
 
-        throw new EntityException("Unexpected Entity: " . get_class($entity));
     }
 
-    /**
-     * @param Entity $entity
-     * @return bool
-     * @throws EntityException
-     */
     public function delete(Entity $entity)
     {
-        if (!($entity instanceof CheatsheetsEntity)) {
-            $key = ['user_id' => $entity->get('user_id')];
-            $success = $this->db->delete("users", $key, 1);
-            return $success;
-        }
 
-        throw new EntityException("Unexpected Entity: " . get_class($entity));
     }
 }

@@ -24,7 +24,7 @@ class AuthenticateAction extends AbstractAction
         $payload  = $this->domain->authenticate($username, $password);
 
         $type = $payload->getType();
-        $this->http->setPayload($payload);
+        if ($type != "Found") $this->http->setPayload($payload);
 
         // in addition to our other work, this action has to tell our response about some additional
         // details as follows.  we don't rely on a method of the domain to send back the $username from
@@ -42,10 +42,19 @@ class AuthenticateAction extends AbstractAction
                 break;
 
             // if we found our account, then we also want to set up the authenticated Session.  luckily,
-            // that's super easy as follows.
+            // that's super easy as follows.  then, if we have a location to which we wish to return to
+            // we'll go there; otherwise, we go to the cheatsheets index.
 
             case 'Found':
                 $this->session->login($username);
+
+                $location = "/cheatsheets";
+                if ($this->session->exists('AFTER_LOGIN_RETURN_TO')) {
+                    $location = $this->session->get('AFTER_LOGIN_RETURN_TO');
+                    $this->session->remove('AFTER_LOGIN_RETURN_TO');
+                }
+
+                $this->http->redirect($location);
                 break;
         }
 

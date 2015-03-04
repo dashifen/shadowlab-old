@@ -4,6 +4,7 @@
 @import "sections/header";
 @import "sections/mainmenu";
 @import "sections/main";
+@import "sections/searchbar";
 @import "sections/footer";
 
 html {
@@ -25,6 +26,12 @@ body {
 	width: 90%;
 }
 
+a {
+	text-decoration: underline;
+	&:link, &:visited { color: #900; }
+	&:active, &:focus, &:hover { color: #F00; }
+}
+
 em {
 	font-family: 'Droid Serif', serif;
 	font-size: .9em;							/* em sizing is intentional */
@@ -35,6 +42,31 @@ em {
 	margin:  0;
 	padding: 0;
 }
+
+table {
+	td, th {
+		padding: .33rem;
+		text-align: left;
+		vertical-align: top;
+	}
+	
+	thead th {
+		background-color: #333;
+		color: #fff;
+		text-align: left;
+		vertical-align: top;
+	}
+	
+	th {
+		font-weight: bold;
+	}
+	
+	tr.even {
+		background-color: #e4e4e4;
+	}
+}
+		
+		
 
 form {
 	fieldset {

@@ -13,7 +13,7 @@ class Blank extends AbstractResponse
             'username' => ''
         ];
 
-        $this->render('User\Login', $data);
+        $this->render('Blank', $data);
     }
 
 }

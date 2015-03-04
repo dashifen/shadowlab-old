@@ -4,7 +4,7 @@ namespace Shadowlab\Actions\Cheatsheets;
 
 use Shadowlab\Interfaces\Action\AbstractAction;
 
-class IndexAction extends AbstractAction
+class IndexOtherAction extends AbstractAction
 {
     /**
      * @var \Shadowlab\Domains\Cheatsheets\Cheatsheets
@@ -12,13 +12,13 @@ class IndexAction extends AbstractAction
     protected $domain;
 
     /**
-     * @var \Shadowlab\Responses\Cheatsheets\Index
+     * @var \Shadowlab\Responses\Cheatsheets\IndexOther
      */
     protected $http;
 
     public function execute()
     {
-        $cheatsheets = $this->domain->getCheatsheets();
+        $cheatsheets = $this->domain->getCheatsheets('other');
         $this->http->setPayload($cheatsheets);
         return $this->http->execute();
     }

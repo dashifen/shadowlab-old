@@ -85,4 +85,13 @@ class Session implements SessionInterface
     {
         return $_SESSION[$index] = $value;
     }
+
+    /**
+     * @param $index
+     * @return void
+     */
+    public function remove($index)
+    {
+        unset($_SESSION[$index]);
+    }
 }

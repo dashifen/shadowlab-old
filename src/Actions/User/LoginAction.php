@@ -18,14 +18,14 @@ class LoginAction extends AbstractAction
 
     public function execute()
     {
-        if ($this->isDev()) {
+        if ($this->isDev() || ($authentic = $this->session->isAuthenticated())) {
 
-            // if this is the development machine, then we'll log dashifen in as a superuser.  then,
-            // we can redirect to the cheat sheet index page.  that's the same page that he and others
-            // are taken to
+            // if this is the development machine or if the visitor is already authentic, then we want to
+            // redirect away from this page.  and, if we're not authentic, within this block, then we'll auto-
+            // authenticate dash since he must be working on the development machine at the moment.
 
-            //$this->session->login('dashifen', 'superuser');
-            //$this->http->redirect("/cheatsheets");
+            if (!$authentic) $this->session->login('dashifen', 'superuser');
+            $this->http->redirect("/cheatsheets");
 
         } else {
 
@@ -43,6 +43,6 @@ class LoginAction extends AbstractAction
     protected function isDev()
     {
         $server_name = $this->request->server->get('SERVER_NAME');
-        return $server_name == 'localhost';
+        return $server_name == 'localhost' || strpos($server_name, '192.168.1.') !== false;
     }
 }

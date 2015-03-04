@@ -3,6 +3,7 @@ main {
 	border: 1px solid #000;
 	border-top-right-radius: 1rem;
 	border-bottom-left-radius: 1rem;
+	height: auto;
 	margin: 2rem;
 	min-height: 150px;
 	padding: 2rem;
@@ -31,12 +32,11 @@ main {
 		transform: rotate(180deg);
 	}
 	
-	h2 {
-		font-size: 2rem;
-		font-family: Iceland, serif;
-		margin-top: 0;
+	& > * + * {
+		margin-top: 2rem;
 	}
 	
+	h2       { font-size: 1.66rem; margin: 0; }
 	h3       { font-size: 1.33rem; }
 	h4,h5,h6 { font-size: 1rem;    }
 	
@@ -44,4 +44,36 @@ main {
 	h4,h5 { text-transform: uppercase;  }
 	h6    { text-decoration: underline; }
 	
+	.sheets {
+		@extend .clearfix;
+		
+		div {
+			@extend .w33;
+			@extend .fleft;
+			
+			& + div {
+				padding-left: 1rem;	
+			}
+		
+			&:nth-of-type(3n+1) {
+				clear: left;
+				padding-left: 0;
+			}
+			
+			h3 {
+				border-bottom: 1px solid #000;
+				margin-bottom: 2px;
+			}
+			
+		}
+
+		ul {
+			@extend .no-list;
+		
+			&.columns {
+				column-count: 4;
+				column-gap: 2rem;
+			}
+		}
+	}
 }

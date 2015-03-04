@@ -42,9 +42,6 @@
 		
 		<?php if ($this->isAuthenticated) { ?>
 			<ul>
-                <li>
-                    <a href="/cheatsheets">Home</a>
-                </li>
 				<li>
 					<a href="/cheatsheets/combat">Combat</a>
 					<ul class="submenu">
@@ -102,6 +99,8 @@
 <main role="main">
     <h2><?= empty($this->heading) ? $this->title : $this->heading ?></h2>
     <?= $this->getContent() ?>
+	
+	<br class="clearfix">
 </main>
 
 <footer role="contentinfo">
@@ -115,5 +114,12 @@
     <p>Content not owned by <a href="http://www.topps.com/">The Topps Company, Inc.</a> and all
         programming is copyright &copy; 2013-<?=date("Y")?> <a href="http://dashifen.com">David Dashifen Kees</a>.</p>
 </footer>
+
+<script type="text/javascript" src="/Assets/js/3rd-party/jquery.purl.min.js"></script>
+<script type="text/javascript" src="/Assets/js/3rd-party/jquery.class.min.js"></script>
+<script type="text/javascript" src="/assets/js/utilities/searchbar.min.js"></script>
+<script type-"text/javascript" src="/assets/js/utilities/summarize.min.js"></script>
+<script type-"text/javascript" src="/assets/js/globals.min.js"></script>
+
 </body>
 </html>

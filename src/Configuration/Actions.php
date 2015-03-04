@@ -36,5 +36,30 @@ class Actions extends Config
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Index')
         ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\IndexCombatAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexCombat')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\IndexMagicAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexMagic')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\IndexMatrixAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexMatrix')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Matrix\MatrixActionsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\MatrixActions\MatrixActions'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\MatrixActions')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\IndexOtherAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexOther')
+        ];
     }
 }

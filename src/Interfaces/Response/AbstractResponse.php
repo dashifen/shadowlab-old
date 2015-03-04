@@ -102,11 +102,25 @@ abstract class AbstractResponse implements Response
      */
     public function execute()
     {
-        if ($this->payload == null) $this->handleError();
-        else {
-            $method = "handle" . $this->payload->getType();
-            if(method_exists($this, $method)) $this->$method();
-            else $this->handleUnknown();
+        $status = $this->response->status->getCode();
+        if ($status != 302) {
+
+            // status 302 is a redirection, and if we're redirecting, then we don't want to mess with a
+            // view payload which is what's happening here in this if-block.  so, we only perform these
+            // actions if we're not redirecting.  most of the time, we should already have a payload here.
+            // but, if we don't, then we'll call this one an error.
+
+            if ($this->payload == null) $this->handleError();
+            else {
+
+                // otherwise, we'll get our type of payload and prefix it with "handle" to create method
+                // names like handleNotFound() handleValid().  then, as long as that method exists, we
+                // call it.  if it doesn't, we'll tell the client about our unknown/unexpected payload.
+
+                $method = "handle" . $this->payload->getType();
+                if(method_exists($this, $method)) $this->$method();
+                else $this->handleUnknown();
+            }
         }
 
         return $this;
@@ -164,6 +178,10 @@ EOC;
      */
     public function send()
     {
+        // like with the execute above, we have to be careful here to avoid trying to render a display if
+        // we're redirecting.  this is one of those cases where the HTTP headers are more important than the
+        // body content.
+
         $status = $this->response->status->getCode();
         if($status != 302) $this->render();
 

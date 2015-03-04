@@ -13,7 +13,7 @@ abstract class AbstractGateway implements Gateway
         $this->db = $db;
     }
 
-    abstract public function select(array $entities);
+    abstract public function select(array $entities = null);
     abstract public function insert(Entity $entity);
     abstract public function update(Entity $entity);
     abstract public function delete(Entity $entity);
