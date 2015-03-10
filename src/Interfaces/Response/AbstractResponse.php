@@ -133,10 +133,13 @@ abstract class AbstractResponse implements Response
     {
         $this->response->status->set(404);
         $this->data["title"] = "Huh?";
+
         $content = <<<EOC
             <p><strong>File Not Found</strong>:<br><em>A Haiku from the Internet to You</em></p>
             <p>You step in the stream,<br>But the water has moved on.<br>This page is not here.</p>
 EOC;
+
+        $this->view->setView("Blank");
         $this->response->content->set($content);
     }
 
@@ -162,6 +165,7 @@ EOC;
             if($e instanceof \Exception) $message = $e->getMessage();
         }
 
+        $this->view->setView("Blank");
         $this->response->content->set($message);
     }
 

@@ -77,5 +77,14 @@ class Domains extends Config
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\MatrixActions\MatrixActionsEntity')
         ];
 
+        $di->params['Shadowlab\Domains\Cheatsheets\Matrix\Programs\Programs'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\Programs\ProgramsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\Programs\ProgramsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\Programs\ProgramsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Matrix\Programs\ProgramsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\Programs\ProgramsEntity')
+        ];
     }
 }

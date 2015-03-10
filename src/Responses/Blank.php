@@ -6,14 +6,8 @@ use Shadowlab\Interfaces\Response\AbstractResponse;
 
 class Blank extends AbstractResponse
 {
-    protected function blank()
+    protected function handleBlank()
     {
-        $data = [
-            'title'    => 'Home',
-            'username' => ''
-        ];
-
-        $this->render('Blank', $data);
+        $this->setView('Blank', [ 'title' => '', 'username' => '' ]);
     }
-
 }
