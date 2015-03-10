@@ -29,7 +29,7 @@ nav.mainmenu {
 			
 			& > a {				
 				&:active, &:focus, &:hover {
-					background-color: #1A609E;
+					background-color: #000;
 				}
 			}
 			
@@ -39,7 +39,7 @@ nav.mainmenu {
 				}
 				
 				& > a {
-					background-color: #1A609E;
+					background-color: #000;
 				}
 			}
 		}
@@ -53,7 +53,7 @@ nav.mainmenu {
 	}
 	
 	ul.submenu {
-		background-color: #1A609E;
+		background-color: #000;
 		border-bottom-left-radius: 1rem;
 		border-bottom-right-radius: 1rem;
 		display: none;

@@ -32,6 +32,10 @@ a {
 	&:active, &:focus, &:hover { color: #F00; }
 }
 
+abbr span {
+	@extend .visuallyhidden;
+}
+
 em {
 	font-family: 'Droid Serif', serif;
 	font-size: .9em;							/* em sizing is intentional */

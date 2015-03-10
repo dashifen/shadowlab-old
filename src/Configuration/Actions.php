@@ -47,9 +47,24 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexMagic')
         ];
 
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\SpellsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spells\Spells'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Spells')
+        ];
+
         $di->params['Shadowlab\Actions\Cheatsheets\IndexMatrixAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexMatrix')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Matrix\ComplexFormsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\ComplexForms\ComplexForms'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\ComplexForms')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Matrix\IntrusionCountermeasuresAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\IntrusionCountermeasures\IntrusionCountermeasures'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\IntrusionCountermeasures')
         ];
 
         $di->params['Shadowlab\Actions\Cheatsheets\Matrix\MatrixActionsAction'] = [

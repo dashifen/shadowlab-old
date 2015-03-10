@@ -83,7 +83,7 @@ var Searchbar = Class.extend({
 					// if there's a name + "-list" data setting, then we want to use the is() method to determine
 					// if our value is a part of that list.  otherwise, we'll simply look for a match to our value.
 					
-					if(row.data(name + "-list")) show = show && row.is("[data-" + name + "~=" + value + "]");
+					if(row.data(name + "-list")) show = show && row.is("[data-" + name + "-list~=" + value + "]");
 					else show = show && row.data(name) == value;
 				} else {
 					// this try block helps to avoid bad regular expressions based on wacky user entry.  if we 

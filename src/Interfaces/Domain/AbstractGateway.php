@@ -13,6 +13,12 @@ abstract class AbstractGateway implements Gateway
         $this->db = $db;
     }
 
+    public function ticker(&$column)
+    {
+        $column = '`' . $column . '`';
+        return $column;
+    }
+
     abstract public function select(array $entities = null);
     abstract public function insert(Entity $entity);
     abstract public function update(Entity $entity);

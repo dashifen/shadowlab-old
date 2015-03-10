@@ -1,4 +1,3 @@
-<form class="searchbar">
 <?php if (sizeof($this->actions) <= 0) { ?>
 
 	<p>We could not find any matrix actions in the database at this time.  Frankly, this is probably just a bug.
@@ -52,7 +51,7 @@
 			<tr class="b description hidden <?= $i%2==0?"odd":"even" ?>" data-name="<?= $matrix_action ?>">
 				<td colspan="4" class="padb">
 					<p><?= nl2br($description) ?></p>
-					<p>(<?= $reference ?>)</p>
+					<p>(p. <?= $page ?>, <?= $abbr ?>)</p>
 				</td>
 			</tr>
 		<?php } ?>

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e11ecb1e2ea0f036c9ff96775faf3a9f",
+    "hash": "772489a1413eb4d2436683ff0b0dda85",
     "packages": [
         {
             "name": "aura/di",
@@ -174,51 +174,6 @@
     ],
     "packages-dev": [
         {
-            "name": "brandonsavage/booboo",
-            "version": "0.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/brandonsavage/booboo.git",
-                "reference": "948623ab3b4dd9eb1a56a597d00e3678cc17c4ef"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/brandonsavage/booboo/zipball/948623ab3b4dd9eb1a56a597d00e3678cc17c4ef",
-                "reference": "948623ab3b4dd9eb1a56a597d00e3678cc17c4ef",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/log": "~1.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.3",
-                "raven/raven": "0.10.0"
-            },
-            "suggest": {
-                "raven/raven": "Use Raven for passing errors to Sentry."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Savage\\BooBoo\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brandon Savage",
-                    "homepage": "https://www.brandonsavage.net/"
-                }
-            ],
-            "description": "Provides an error handler for PHP that can execute a stack of handlers for various purposes.",
-            "time": "2015-01-31 13:49:57"
-        },
-        {
             "name": "doctrine/instantiator",
             "version": "1.0.4",
             "source": {
@@ -271,6 +226,51 @@
                 "instantiate"
             ],
             "time": "2014-10-13 12:58:55"
+        },
+        {
+            "name": "league/booboo",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/booboo.git",
+                "reference": "50008c980c5f710599705cb6758723588e875133"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/booboo/zipball/50008c980c5f710599705cb6758723588e875133",
+                "reference": "50008c980c5f710599705cb6758723588e875133",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.3",
+                "raven/raven": "0.10.0"
+            },
+            "suggest": {
+                "raven/raven": "Use Raven for passing errors to Sentry."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\BooBoo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brandon Savage",
+                    "homepage": "https://www.brandonsavage.net/"
+                }
+            ],
+            "description": "Provides an error handler for PHP that can execute a stack of handlers for various purposes.",
+            "time": "2015-02-25 19:12:30"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

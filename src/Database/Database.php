@@ -53,6 +53,7 @@ class Database extends AbstractMysqlDatabase
 
             try {
                 $statement = $this->db->prepare($query);
+                if($statement === false) throw new DatabaseException('Unable to execute query', $query);
 
                 if($type_count > 0) {
                     $types = join('', $this->types);
@@ -232,7 +233,7 @@ class Database extends AbstractMysqlDatabase
         $columns = array_keys($values);
         $query = "UPDATE {$table} SET ";
         foreach($columns as $column) $temp[] = "{$column} = ?";
-        $query .= join(", ", $temp);
+        $query .= join(", ", $temp) . ' ';
 
         if(sizeof($criteria) > 0) $query .= "WHERE " . $this->buildWhere($criteria) . " ";
         $results = $this->runQuery($query);

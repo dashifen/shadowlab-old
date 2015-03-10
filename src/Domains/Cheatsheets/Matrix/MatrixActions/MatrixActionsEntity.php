@@ -13,7 +13,9 @@ class MatrixActionsEntity extends AbstractEntity
     protected $defensive_test;
     protected $marks_required;
     protected $description;
-    protected $reference;
+    protected $book_id;
+    protected $abbr;
+    protected $page;
 
     public function __construct(array $data = [])
     {

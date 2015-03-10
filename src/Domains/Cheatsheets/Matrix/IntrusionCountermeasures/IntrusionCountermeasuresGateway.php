@@ -1,16 +1,16 @@
 <?php
 
-namespace Shadowlab\Domains\Cheatsheets\Matrix\MatrixActions;
+namespace Shadowlab\Domains\Cheatsheets\Matrix\IntrusionCountermeasures;
 
 use Shadowlab\Exceptions\EntityException;
 use Shadowlab\Interfaces\Domain\Entity;
 use Shadowlab\Interfaces\Domain\AbstractGateway;
 
-class MatrixActionsGateway extends AbstractGateway
+class IntrusionCountermeasuresGateway extends AbstractGateway
 {
     /**
      * @param array $entities
-     * @return array|MatrixActionsEntity|bool
+     * @return array|IntrusionCountermeasuresEntity|bool
      * @throws EntityException
      */
     public function select(array $entities = null)
@@ -25,21 +25,17 @@ class MatrixActionsGateway extends AbstractGateway
 
     protected function selectAll()
     {
-        // to get all of our matrix actions is to select the information from the database that makes
-        // up our entity.  for the moment, we've prepared a view in the database to make this selection
-        // as easy as possible, but we'll need to break that up later to be sure that we can insert new
-        // actions.
+        // to get all of our intrusion countermeasures is to select the information from the database
+        // that makes up our entity.
 
-        $reflection = new \ReflectionClass(MatrixActionsEntity::class);
+        $reflection = new \ReflectionClass(IntrusionCountermeasuresEntity::class);
         $properties = $reflection->getProperties();
+
         foreach($properties as &$property) $property = $property->getName();
 
         $original_db = $this->db->getDatabase();
         $this->db->setDatabase("dashifen_shadowlab");
-        $actions = $this->db->getResults($properties,
-            "matrix_actions INNER JOIN books USING (book_id)",
-            [], ["matrix_action"]);
-
+        $actions = $this->db->getResults($properties, "ic INNER JOIN books USING (book_id)", [], ["ic"]);
         $this->db->setDatabase($original_db);
 
         return $actions;
@@ -47,7 +43,7 @@ class MatrixActionsGateway extends AbstractGateway
 
     protected function selectSome()
     {
-
+        return false;
     }
 
     public function insert(Entity $entity)

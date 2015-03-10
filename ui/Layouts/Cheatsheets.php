@@ -117,7 +117,7 @@
 
 <script type="text/javascript" src="/Assets/js/3rd-party/jquery.purl.min.js"></script>
 <script type="text/javascript" src="/Assets/js/3rd-party/jquery.class.min.js"></script>
-<script type="text/javascript" src="/assets/js/utilities/searchbar.min.js"></script>
+<script type="text/javascript" src="/assets/js/utilities/max/searchbar.js"></script>
 <script type-"text/javascript" src="/assets/js/utilities/summarize.min.js"></script>
 <script type-"text/javascript" src="/assets/js/globals.min.js"></script>
 

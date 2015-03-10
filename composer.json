@@ -24,7 +24,7 @@
   },
 
   "require-dev": {
-    "phpunit/phpunit":      "~4.4",
-    "brandonsavage/booboo": "~0.4"
+    "phpunit/phpunit":   "~4.4",
+    "league/booboo":     "~1.0"
   }
 }
