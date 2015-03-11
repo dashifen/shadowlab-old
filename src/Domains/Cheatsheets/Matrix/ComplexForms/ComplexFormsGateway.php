@@ -20,9 +20,7 @@ class ComplexFormsGateway extends AbstractGateway
 
     protected function selectAll()
     {
-        $reflection = new \ReflectionClass(ComplexFormsEntity::class);
-        $properties = $reflection->getProperties();
-        foreach($properties as &$property) $property = $property->getName();
+        $properties = ComplexFormsEntity::getProperties();
         array_walk($properties, [$this, "ticker"]);
 
         $old_db = $this->db->getDatabase();

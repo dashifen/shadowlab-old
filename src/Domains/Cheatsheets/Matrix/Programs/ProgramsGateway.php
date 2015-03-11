@@ -20,9 +20,7 @@ class ProgramsGateway extends AbstractGateway
 
     protected function selectAll()
     {
-        $reflection = new \ReflectionClass(ProgramsEntity::class);
-        $properties = $reflection->getProperties();
-        foreach($properties as &$property) $property = $property->getName();
+        $properties = ProgramsEntity::getProperties();
         array_walk($properties, [$this, "ticker"]);
 
         $old_db = $this->db->getDatabase();

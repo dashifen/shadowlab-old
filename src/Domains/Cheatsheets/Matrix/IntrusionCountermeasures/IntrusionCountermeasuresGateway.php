@@ -28,10 +28,8 @@ class IntrusionCountermeasuresGateway extends AbstractGateway
         // to get all of our intrusion countermeasures is to select the information from the database
         // that makes up our entity.
 
-        $reflection = new \ReflectionClass(IntrusionCountermeasuresEntity::class);
-        $properties = $reflection->getProperties();
-
-        foreach($properties as &$property) $property = $property->getName();
+        $properties = IntrusionCountermeasuresEntity::getProperties();
+        array_walk($properties, [$this, "ticker"]);
 
         $original_db = $this->db->getDatabase();
         $this->db->setDatabase("dashifen_shadowlab");

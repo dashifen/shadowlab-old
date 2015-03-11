@@ -4,8 +4,16 @@ namespace Shadowlab\Interfaces\Domain;
 
 use Shadowlab\Exceptions\EntityException;
 
+/**
+ * Class AbstractEntity
+ * @package Shadowlab\Interfaces\Domain
+ */
 abstract class AbstractEntity implements Entity
 {
+    /**
+     * @param $key
+     * @return null
+     */
     public function get($key)
     {
         $retval = null;
@@ -17,20 +25,18 @@ abstract class AbstractEntity implements Entity
         return $retval;
     }
 
-    public function set($key, $value)
-    {
-        if(property_exists($this, $key)) {
-            $this->{$key} = $value;
-        } else {
-            throw new EntityException("Unknown entity: " . $key);
-        }
-    }
-
+    /**
+     * @return array
+     */
     public function getAll()
     {
         return get_object_vars($this);
     }
 
+    /**
+     * @param array $except
+     * @return array
+     */
     public function getAllExcept(array $except)
     {
         $properties = $this->getAll();
@@ -44,6 +50,57 @@ abstract class AbstractEntity implements Entity
         return $properties;
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @throws EntityException
+     */
+    public function set($key, $value)
+    {
+        if(property_exists($this, $key)) {
+            $this->{$key} = $value;
+        } else {
+            throw new EntityException("Unknown property: " . $key);
+        }
+    }
+
+    /**
+     * @param $key
+     * @param array $value
+     * @throws EntityException
+     */
+    public function setArray($key, array $value = [])
+    {
+        // this is just a wrapper for the set() method with a type hint to be sure
+        // that we get an array when we need one.
+
+        $this->set($key, $value);
+    }
+
+    /**
+     * @param $key
+     * @param $index
+     * @param $value
+     * @throws EntityException
+     */
+    public function setArrayIndex($key, $index, $value)
+    {
+        if (property_exists($this, $key)) {
+            if (!is_array($this->{$key})) {
+                $this->{$key} = [];
+            }
+
+            $this->{$key}[$index] = $value;
+        } else {
+            throw new EntityException("Unknown property: " . $key);
+        }
+    }
+
+    /**
+     * @param array $properties
+     * @return bool
+     * @throws EntityException
+     */
     public function setAll(array $properties)
     {
         $skipped = array();
@@ -62,5 +119,20 @@ abstract class AbstractEntity implements Entity
         }
 
         return true;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getProperties()
+    {
+        $reflection = new \ReflectionClass(get_called_class());
+        $properties = $reflection->getProperties();
+
+        foreach ($properties as &$property) {
+            $property = $property->getName();
+        }
+
+        return $properties;
     }
 }

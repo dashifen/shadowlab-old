@@ -24,15 +24,8 @@ class SpellsGateway extends AbstractGateway
 
     public function selectAll()
     {
-        // to determine what information we want to select about our spells from the database, we reflect our
-        // entity class.  because each spell has a one-to-many relationship with the tags, we've prepared a view
-        // that gathers that information for us within the database.  we can use the view to select information,
-        // but it's not appropriate for insertion or updates.
-
-        $reflection = new \ReflectionClass(SpellsEntity::class);
-        $properties = $reflection->getProperties();
-
-        foreach ($properties as &$property) $property = '`' . $property->getName() . '`';
+        $properties = SpellsEntity::getProperties();
+        array_walk($properties, [$this, "ticker"]);
 
         $original_db = $this->db->getDatabase();
         $this->db->setDatabase("dashifen_shadowlab");

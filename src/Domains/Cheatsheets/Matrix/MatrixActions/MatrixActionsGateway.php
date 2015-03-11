@@ -30,9 +30,8 @@ class MatrixActionsGateway extends AbstractGateway
         // as easy as possible, but we'll need to break that up later to be sure that we can insert new
         // actions.
 
-        $reflection = new \ReflectionClass(MatrixActionsEntity::class);
-        $properties = $reflection->getProperties();
-        foreach($properties as &$property) $property = $property->getName();
+        $properties = MatrixActionsEntity::getProperties();
+        array_walk($properties, [$this, "ticker"]);
 
         $original_db = $this->db->getDatabase();
         $this->db->setDatabase("dashifen_shadowlab");

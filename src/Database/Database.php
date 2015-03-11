@@ -44,6 +44,10 @@ class Database extends AbstractMysqlDatabase
      */
     public function runQuery($query)
     {
+
+        var_dump($query);
+        var_dump($this->bindings);
+
         if(($type_count = sizeof($this->types)) == sizeof($this->bindings)) {
             // as long as we have the same number of types as we do bindings, we're good to go.
             // since types is, currently, an array but the bind_param() method expects a string,
@@ -325,7 +329,7 @@ class Database extends AbstractMysqlDatabase
 
         $columns = [];
         $results = $results->fetch_all(MYSQL_NUM);
-        foreach($results as $row) $columns = $results[0];
+        foreach($results as $row) $columns = $row[0];
         return $columns;
     }
 
@@ -401,45 +405,129 @@ class Database extends AbstractMysqlDatabase
      */
     protected function buildWhere($criteria)
     {
-        $temp = [];
-        foreach($criteria as $column => $value) {
-            // most of the time, $value is a scalar value representing the value that $column must have
-            // to satisfy this part of our WHERE clause.  but, if $value is an array, then the first index
-            // is the comparison that we're making while the second is the values we use to make it.
-            // those comparisons are equal, not-equal, less than, less than or equal to, greater than or
-            // equal to, greater than, LIKE, and IN.
+        // before we continue, it's necessary for us to understand the structure of our $criteria array.
+        // if it's an array of arrays, we're going to recursively call this function in order to produce
+        // a single WHERE clause from this nesting.
 
-            if(!is_array($value)) $comparison = "=";
-            else list($comparison, $value) = $value;
-            $this->setTypesAndBindings([$value]);
+        $clauses = [];
 
-            if(!$this->isValidComparison($value, $comparison)) {
-                throw new DatabaseException("Invalid comparison: {$comparison} {$value}");
+        if ($this->is_multidimensional($criteria)) {
+
+            // to handle our multidimensional array, we simple loop over each criterion within it and
+            // build a series of nested WHERE clauses.  these clauses are joined by a conjunction which
+            // is the first index in our $criteria.  we can use the method below to determine that
+            // conjunction.
+
+            $conjunction = $this->findConjunction($criteria);
+
+            foreach ($criteria as $criterion) {
+                $clauses[] = "(" . $this->buildWhere($criterion) . ") ";
             }
 
-            $temp[] = $comparison == "IN"
-                ? "{$column} IN (" . join(", ", array_fill(0, sizeof($value), '?')) . ")"
-                : "{$column} {$comparison} ?";
+            return join(" $conjunction ", $clauses);
+        } else {
+
+            // for single dimensional arrays, we get our conjunction just like we did above and then
+            // treat the remaining criteria as column/value pairs to be added as comparison clauses to
+            // our overall WHERE clause.
+
+            $conjunction = $this->findConjunction($criteria);
+
+            foreach ($criteria as $column => $value) {
+                $operator = $this->findComparisonOp($value);
+                if (!$this->isValidComparison($value, $operator)) {
+                    throw new DatabaseException("Invalid comparison: {$operator} {$value}");
+                }
+
+                $clauses[] = $this->buildComparison($column, $operator, $value);
+            }
+
+            return join(" $conjunction ", $clauses);
+        }
+    }
+
+    /**
+     * @param array $array
+     * @return bool
+     */
+    protected function is_multidimensional(array $array)
+    {
+        // we can use array_filter to remove all non-array indices from the $array parameter.
+        // that's because the is_array() function will return true for arrays (obviously) and
+        // array_filter() removes any indices that produce a false result from within its
+        // array parameter.  thus, if the size of $temp is zero after our filtering, then all
+        // indices in $array are not, themselves, arrays and this is, therefore, not a multi-
+        // dimensional array.
+
+        $temp = array_filter($array, "is_array");
+        return (bool) sizeof($temp);
+    }
+
+    /**
+     * @param array $array
+     * @return string
+     * @throws DatabaseException
+     */
+    protected function findConjunction(array &$array)
+    {
+        $conjunction = array_slice($array, 0, 1, true);
+        $conjunction = array_shift($conjunction);
+
+        if ($conjunction !== "AND" && $conjunction !=="OR") {
+
+            // if it's neither AND nor OR, we'll default to AND and assume that it's something that
+            // shall be included as a logical statement within our WHERE clause.  because we've not
+            // altered the $array parameter, we can return knowing that the calling scope's $criteria
+            // have not been altered this time.
+
+            return "AND";
+        } elseif ($conjunction === "AND" || $conjunction === "OR") {
+
+            // when our $conjunction is either AND or OR we want to remove the first index from $array
+            // and then return the conjunction we found.  this ensures that we don't try to use a
+            // conjunction in a logical statement within our WHERE clause.
+
+            array_shift($array);
+            return $conjunction;
         }
 
-        return join(", ", $temp);
+        // anything else is an exception.
+
+        throw new DatabaseException("Unable to identify WHERE conjunction: " . join(", ", $array));
     }
 
     /**
      * @param $value
-     * @param $comparison
+     * @return string
+     */
+    protected function findComparisonOp(&$value)
+    {
+        $comparison = "=";
+
+        if (is_array($value)) {
+            $comparison = $value[0];
+
+            // because $value is passed by reference, changing it here changes it for the calling scope.
+            // after this method, $value will be the value and we return the $comparison below.
+
+            $value = $value[1];
+        }
+
+        return $comparison;
+    }
+
+    /**
+     * @param $value
+     * @param $operator
      * @return bool
      */
-    protected function isValidComparison($value, $comparison)
+    protected function isValidComparison($value, $operator)
     {
-        // most of our comparisons are in the form of X=Y, X<Y, etc.  none of these actually require any
-        // testing.  therefore, the ones we focus on here are the LIKE and IN operators.  those need a
-        // a little care.  regardless, we also pass $value to our setTypesAndBindings() method to be sure
-        // they get updated, too.
+        // most of our comparisons are in the form of X=Y, X<Y, etc.  none of these actually require much
+        // testing.  the ones that need a little more work are the LIKE, IN, IS, and IS NOT operators so
+        // these get their own cases; other comparisons are all in the default case.
 
-        $okay = true;
-
-        switch($comparison) {
+        switch($operator) {
             case "LIKE":
                 $okay = strpos($value, "%") !== false;
                 break;
@@ -447,9 +535,60 @@ class Database extends AbstractMysqlDatabase
             case "IN":
                 $okay = is_array($value);
                 break;
+
+            case "IS":
+            case "IS NOT":
+                $okay = $value == "NULL";
+                break;
+
+            default:
+                $okay = array_search($operator, array("<", "<=", "=", "=>", ">")) !== false;
+                break;
         }
 
         return $okay;
+    }
+
+    /**
+     * @param $column
+     * @param $operator
+     * @param $value
+     * @return string
+     */
+    protected function buildComparison($column, $operator, $value)
+    {
+        switch ($operator) {
+            default:
+                $this->setTypesAndBindings([$value]);
+                $comparison = "{$column} {$operator} ?";
+                break;
+
+            case "IN":
+
+                // for IN comparisons (e.g. column IN (1,2,3,4,5) we need to create a comparison like
+                // the the following:  column IN (?,?,?,?,?).  to do that we can create an array of
+                // question marks of equal length to the size of $value and then pass $value over to
+                // the setTypesAndBindings to be sure that all of the information therein will be
+                // ready to be used in our parametrized statement.  note that the isComparisonValid
+                // method already confirmed that $value is an array.
+
+                $this->setTypesAndBindings($value);
+                $comparison = "{$column} IN (" . join(", ", array_fill(0, sizeof($value), '?')) . ")";
+                break;
+
+            case "IS":
+            case "IS NOT":
+
+                // in these cases, it doesn't actually matter what our $value is.  the only time we use
+                // an IS or an IS NOT comparison is when $value was NULL.  so, we can just add that to
+                // our string directly.  as a result, we do not need to call the setTypesAndBindings
+                // method here like we did above.
+
+                $comparison = "{$column} {$operator} NULL";
+                break;
+        }
+
+        return $comparison;
     }
 
     /**
