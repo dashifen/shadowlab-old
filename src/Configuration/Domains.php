@@ -96,5 +96,25 @@ class Domains extends Config
         $di->params['Shadowlab\Domains\Cheatsheets\Matrix\SpriteDatabase\SpriteDatabaseFilter'] = [
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpriteDatabase\SpriteDatabaseEntity')
         ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowers'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowersFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowersFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowersGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowersFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowersEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Other\Qualities\Qualities'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Other\Qualities\QualitiesFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Other\Qualities\QualitiesFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Other\Qualities\QualitiesGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Other\Qualities\QualitiesFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Other\Qualities\QualitiesEntity')
+        ];
     }
 }

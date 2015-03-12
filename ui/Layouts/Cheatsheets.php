@@ -24,14 +24,18 @@
     <link rel="icon" type="image/png" href="/assets/images/favicons/favicon-16x16.png" sizes="16x16">
     <link rel="manifest" href="/assets/images/favicons/manifest.json">
 
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-	
+	<link href="/assets/css/jquery/jquery-ui.min.css" rel="stylesheet" type="text/css">
+	<link href="/assets/css/jquery/jquery-ui.theme.min.css" rel="stylesheet" type="text/css">
+	<link href="/assets/css/jquery/jquery-ui.structure.min.css" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Iceland:400,700|Droid+Sans:400,700|Droid+Serif:400italic,700italic" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">
 
     <!--[if gte IE 9]> <style type="text/css"> .gradient { filter: none; } </style> <![endif]-->
 
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="/assets/js/3rd-party/jquery-ui.min.js"></script>
+	
     <title><?= $this->title ?></title>
 </head>
 <body>
@@ -118,9 +122,10 @@
 
 <script type="text/javascript" src="/Assets/js/3rd-party/jquery.purl.min.js"></script>
 <script type="text/javascript" src="/Assets/js/3rd-party/jquery.class.min.js"></script>
-<script type="text/javascript" src="/assets/js/utilities/max/searchbar.js"></script>
 <script type-"text/javascript" src="/assets/js/utilities/summarize.min.js"></script>
+<script type="text/javascript" src="/assets/js/utilities/searchbar.min.js"></script>
 <script type-"text/javascript" src="/assets/js/globals.min.js"></script>
 
+<div id="dialog"></div>
 </body>
 </html>

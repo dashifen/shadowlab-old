@@ -12,18 +12,25 @@ form.searchbar {
 			margin-bottom: 0;
 		}
 		
+		ol + ol {
+			margin-top: .5rem;
+		}
+		
 		li {
 			display: inline;
 			width: auto;
 			
-			&:last-child {
-				float: right;
-				margin-left: 0;	
-				position: relative;
-				top: -1px;
+			& + li {
+				margin-left: 1rem;
 			}
 		}
+		
+		ol:first-child li:last-child {
+			float: right;
+			margin-left: 0;	
+			position: relative;
+			top: -1px;
+		}
 	}
-	
 }
 		

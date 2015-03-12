@@ -36,10 +36,11 @@ crashlytics-build.properties
 
 ### Shadowlab ###
 public/assets
-public/pma
 vendor
 
+public/adminer.php
 public/test.php
 config.php
+
 
 

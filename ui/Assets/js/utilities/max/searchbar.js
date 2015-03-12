@@ -19,35 +19,7 @@ var Searchbar = Class.extend({
 				case "checkbox": $(element).click(this.search);    break;
 				case "reset": $(element).click(this.reset);        break;
 			}			
-		}.bind(this));
-		
-		// here, if our URL has search parameters specified in the querystring, we'll parse those values and perform
-		// a search based on them.  this is handy when linking in between the pages of our site and automatically showing
-		// a subset of a fully searchable set.
-		
-		if($.url && typeof($.url)=="function") {
-			var parameters = $.url().param();
-			var perform_search = false;
-			
-			for(var field in parameters) {
-				var value = parameters[field];
-				var input = this.searchbar.find("input[name=" + field + "]");
-				if(input.length != 0) {
-					perform_search = true;
-					input.val(value);
-				}
-			}
-			
-			if(perform_search) {
-				this.search();
-				var rows = this.searchable.find("tbody tr:visible");
-				if(rows.length == 1) {
-					var a = rows.find("th a").get(0);
-					this.searchable.trigger("click", [a]);
-				}
-			}
-		}
-		
+		}.bind(this));		
 	},
 	
 	search: function(event) {

@@ -2,6 +2,14 @@ var Globals = Class.extend({
 	"init": function() {
 		$("form.searchbar").on("searchbar:after", this.zebra);
 		$("form.searchbar").on("searchbar:reset", this.zebra);
+		
+		this.dialog = $("#dialog").dialog({
+			"close": function() { $("#dialog .observed").off(".dialog"); },
+			"draggable": false, "resizable": false, "autoOpen": false, "closeOnEscape": false, "modal": true,
+			"height": "auto", "maxHeight": 600, "width": 600,
+		});
+		
+		$("a.dialog").click($.proxy(this.loadDialog, this));
 	},
 	
 	"zebra": function() {
@@ -14,8 +22,25 @@ var Globals = Class.extend({
 			summary.removeClass(rem_class).addClass(add_class);
 			description.removeClass(rem_class).addClass(add_class);
 		});
-	}
+	},
 	
+	"loadDialog": function(event) {
+		event.stopPropagation();
+		event.preventDefault();
+		
+		var a    = $(event.target);
+		var url  = $.url(a.attr("href"));
+		var name = url.param()["name"];
+		var href = url.attr("path") + " #" + name;
+		
+		this.dialog.load(href, null, function(text) {
+			
+			this.dialog.dialog("option", "title", name);
+			this.dialog.dialog("option", "dialogClass", "");
+			this.dialog.dialog("open");
+			
+		}.bind(this));
+	}
 });
 
 $(document).ready(function() { Globals = new Globals(); });

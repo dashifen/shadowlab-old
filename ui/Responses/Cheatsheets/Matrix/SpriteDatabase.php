@@ -50,7 +50,7 @@
 					
 					<tr class="b headers">
 						<th colspan="2" scope="row" class="r">Description:</th>
-						<td colspan="4"><?= $description ?></td>
+						<td colspan="4"><?= $description ?> (p. <?= $page ?>, <?= $abbr ?>)</td>
 					</tr>
 					<tr class="b headers">
 						<th colspan="2" scope="row" class="r">Skills:</th>
@@ -60,7 +60,7 @@
 						<th colspan="2" scope="row" class="r">Powers:</th>
 						<td colspan="4" class="commas">
 							<?php foreach ($powers as $power) { ?>
-								<span><a href="/cheatsheets/matrix/sprite-powers?name=<?= $power ?>"><?= $power ?></a></span>
+								<span><a href="/cheatsheets/matrix/sprite-powers?name=<?= $power ?>" class="dialog"><?= $power ?></a></span>
 							<?php } ?>
 						</td>
 					</tr>

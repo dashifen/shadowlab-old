@@ -47,6 +47,10 @@ em {
 	padding: 0;
 }
 
+li + li {
+	margin-top: .5rem;
+}
+
 table {
 	td, th {
 		padding: .33rem;

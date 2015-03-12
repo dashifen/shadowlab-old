@@ -82,9 +82,19 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\SpriteDatabase')
         ];
 
+        $di->params['Shadowlab\Actions\Cheatsheets\Matrix\SpritePowersAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowers'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\SpritePowers')
+        ];
+
         $di->params['Shadowlab\Actions\Cheatsheets\IndexOtherAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexOther')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Other\QualitiesAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Other\Qualities\Qualities'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Other\Qualities')
         ];
     }
 }

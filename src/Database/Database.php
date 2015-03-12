@@ -430,7 +430,7 @@ class Database extends AbstractMysqlDatabase
 
         $clauses = [];
 
-        if ($this->is_multidimensional($criteria)) {
+        if ($this->is_numerical($criteria)) {
 
             // to handle our multidimensional array, we simple loop over each criterion within it and
             // build a series of nested WHERE clauses.  these clauses are joined by a conjunction which
@@ -469,17 +469,17 @@ class Database extends AbstractMysqlDatabase
      * @param array $array
      * @return bool
      */
-    protected function is_multidimensional(array $array)
+    protected function is_numerical(array $array)
     {
-        // we can use array_filter to remove all non-array indices from the $array parameter.
-        // that's because the is_array() function will return true for arrays (obviously) and
-        // array_filter() removes any indices that produce a false result from within its
-        // array parameter.  thus, if the size of $temp is zero after our filtering, then all
-        // indices in $array are not, themselves, arrays and this is, therefore, not a multi-
-        // dimensional array.
+        // a numerical array is one that's indexed by numbers.  we don't actually care if those numbers are
+        // sequential in this case.  thus, we're just going to see if we have any non-numeric keys and, if
+        // so, we return false.  first, we'll grab our keys.  then, we can filter out the non-numeric ones.
+        // finally, we size of the filtered array to the argument and if they match, we have a numerical
+        // array.
 
-        $temp = array_filter($array, "is_array");
-        return (bool) sizeof($temp);
+        $keys = array_keys($array);
+        $filtered = array_filter($keys, "is_numeric");
+        return sizeof($array) ==  sizeof($filtered);
     }
 
     /**
