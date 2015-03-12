@@ -58,6 +58,13 @@ table {
 		background-color: #333;
 		color: #fff;
 		text-align: left;
+		vertical-align: bottom;
+	}
+	
+	tbody.with-color th {
+		background-color: #DDD;
+		color: #333;
+		text-align: right;
 		vertical-align: top;
 	}
 	

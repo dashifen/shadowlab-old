@@ -17,6 +17,7 @@ interface Database
     public function getCol($column, $table, array $criteria = [], array $orderby = []);
     public function getRow(array $columns, $table, array $criteria = [], array $orderby = []);
     public function getResults(array $columns, $table, array $criteria = [], array $orderby = []);
+    public function getMap(array $columns, $table, array $criteria = [], array $orderby = []);
 
     public function insert($table, array $values);
     public function update($table, array $values, array $criteria = []);

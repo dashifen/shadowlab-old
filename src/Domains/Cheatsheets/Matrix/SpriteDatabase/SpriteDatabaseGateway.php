@@ -29,33 +29,51 @@ class SpriteDatabaseGateway extends AbstractGateway
         // critter table.
 
         $old_db = $this->db->getDatabase();
+        $this->db->setDatabase("dashifen_shadowlab");
         $critter_columns = $this->db->getColumns("critters");
         $critter_columns = array_merge($critter_columns, $this->db->getColumns("books"));
         $critter_data = array_intersect($properties, $critter_columns);
         array_walk($critter_data, [$this, "ticker"]);
 
-        $sprites = $this->db->getResults($critter_data,
+        $sprites = $this->db->getResults(
+            $critter_data,
             "critters INNER JOIN books USING (book_id)",
-            [], "critter");
+            ["critter_type" => "sprite"],
+            ["critter"]);
 
         // now, for each of our sprites, we have to get their attributes, skills, and powers.
         // these data change for each sprite (i.e. not all sprites will have the same Firewall
         // attribute) so we'll loop over our $sprites array and add more information as we go.
 
-        foreach ($sprites as $sprite) {
+        foreach ($sprites as &$sprite) {
+            $critter_id = $sprite["critter_id"];
 
+            $sprite["attributes"] = $this->db->getMap(
+                ["attribute", "rating"],
+                "critters_attributes INNER JOIN attributes USING (attribute_id)",
+                ["AND", ["OR", "attribute"=>"resonance", "category"=>"matrix"], ["critter_id" => $critter_id] ],
+                [ "FIELD(attribute, 'attack', 'sleaze', 'data processing', 'firewall', 'resonance')" ]
+            );
+
+            $sprite["skills"] = $this->db->getVar(
+                "GROUP_CONCAT(skill ORDER BY skill SEPARATOR ', ') AS skills",
+                "critters_skills INNER JOIN skills USING (skill_id)",
+                ["critter_id" => $critter_id]
+            );
+
+            $sprite["powers"] = $this->db->getCol(
+                "critter_power",
+                "critter_powers
+                    INNER JOIN critters_critter_powers USING (critter_power_id)
+                    INNER JOIN critters USING (critter_id)",
+                [ "critter_id" => $critter_id ],
+                [ "critter_power" ]
+            );
 
         }
 
-
-
-        $this->db->setDatabase("dashifen_shadowlab");
-        $programs = $this->db->getResults($properties,
-            "programs INNER JOIN books USING (book_id)",
-            [], ["program"]);
-
         $this->db->setDatabase($old_db);
-        return $programs;
+        return $sprites;
     }
 
     protected function selectSome(array $entities)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Shadowlab\Domains\Cheatsheets\Matrix\Programs;
+namespace Shadowlab\Domains\Cheatsheets\Matrix\SpriteDatabase;
 
 use Shadowlab\Exceptions\DomainException;
 use Shadowlab\Interfaces\Domain\Filter;
@@ -13,20 +13,20 @@ use Shadowlab\Interfaces\Domain\AbstractDomain;
  * Class User
  * @package Shadowlab\Domains\User
  */
-class Programs extends AbstractDomain
+class SpriteDatabase extends AbstractDomain
 {
     /**
-     * @var ProgramsFilter
+     * @var SpriteDatabaseFilter
      */
     protected $filter;
 
     /**
-     * @var ProgramsFactory
+     * @var SpriteDatabaseFactory
      */
     protected $factory;
 
     /**
-     * @var ProgramsGateway
+     * @var SpriteDatabaseGateway
      */
     protected $gateway;
 
@@ -38,14 +38,14 @@ class Programs extends AbstractDomain
     /**
      * @return \Shadowlab\Interfaces\Domain\Payload
      */
-    public function getPrograms()
+    public function getSprites()
     {
         try {
             $programs = $this->gateway->select();
 
             return $programs !== false
-                ? $this->payload->found([ "programs" => $programs ])
-                : $this->payload->notFound([ "programs" => [] ]);
+                ? $this->payload->found([ "sprites" => $programs ])
+                : $this->payload->notFound([ "sprites" => [] ]);
 
         } catch (\Exception $e) {
 
@@ -64,7 +64,7 @@ class Programs extends AbstractDomain
      */
     protected function setFilter(Filter $filter)
     {
-        if ($filter instanceof ProgramsFilter) $this->filter = $filter;
+        if ($filter instanceof SpriteDatabaseFilter) $this->filter = $filter;
         else throw new DomainException("Unexpected filter: " . get_class($filter));
     }
 
@@ -74,7 +74,7 @@ class Programs extends AbstractDomain
      */
     protected function setFactory(Factory $factory)
     {
-        if ($factory instanceof ProgramsFactory) $this->factory = $factory;
+        if ($factory instanceof SpriteDatabaseFactory) $this->factory = $factory;
         else throw new DomainException("Unexpected factory: " . get_class($factory));
     }
 
@@ -84,7 +84,7 @@ class Programs extends AbstractDomain
      */
     protected function setGateway(Gateway $gateway)
     {
-        if ($gateway instanceof ProgramsGateway) $this->gateway = $gateway;
+        if ($gateway instanceof SpriteDatabaseGateway) $this->gateway = $gateway;
         else throw new DomainException("Unexpected gateway: " . get_class($gateway));
     }
 

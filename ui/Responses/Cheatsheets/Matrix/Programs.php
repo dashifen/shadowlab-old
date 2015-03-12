@@ -1,6 +1,6 @@
 <?php if(!is_array($this->programs) || sizeof($this->programs) <= 0) { ?>
 
-	<p>We could not find any progras in the database at this time.  Frankly, this is probably just a bug.
+	<p>We could not find any programs in the database at this time.  Frankly, this is probably just a bug.
 	Unless Dash deleted his own databases.  Either way, try going back a page and then returning to this one using
 	the same link or button as last time.  If we still couldn't find any programs, then contact Dash and he'll get
 	to the bottom of it.</p>

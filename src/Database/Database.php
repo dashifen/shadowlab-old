@@ -45,8 +45,8 @@ class Database extends AbstractMysqlDatabase
     public function runQuery($query)
     {
 
-        var_dump($query);
-        var_dump($this->bindings);
+        /*var_dump($query);
+        var_dump($this->bindings);*/
 
         if(($type_count = sizeof($this->types)) == sizeof($this->bindings)) {
             // as long as we have the same number of types as we do bindings, we're good to go.
@@ -57,7 +57,9 @@ class Database extends AbstractMysqlDatabase
 
             try {
                 $statement = $this->db->prepare($query);
-                if($statement === false) throw new DatabaseException('Unable to execute query', $query);
+                if ($statement === false) {
+                    throw new DatabaseException('Unable to execute query: ' . $this->db->error, $query);
+                }
 
                 if($type_count > 0) {
                     $types = join('', $this->types);
@@ -74,7 +76,7 @@ class Database extends AbstractMysqlDatabase
 
                 $query = str_replace("?", "%s", $query);
                 $query = vsprintf($query, $this->bindings);
-                throw new DatabaseException("Unable to execute query.", $query, $e);
+                throw new DatabaseException('Unable to execute query: ' . $this->db->error, $query, $e);
             }
 
             // $success is boolean so if it's true, we want to actually get our results.
@@ -138,6 +140,7 @@ class Database extends AbstractMysqlDatabase
         $results = $this->runQuery($query);
         if($results === false) return false;
 
+
         // for this method we want to return the information from a single column.  because $column
         // is a single string, we know that's all we selected.  but, the fetch_all() method called
         // be low gives us an array of arrays.  we'll need to flatten that result before we return it.
@@ -188,6 +191,24 @@ class Database extends AbstractMysqlDatabase
         return $results !== false
             ? $results->fetch_all(MYSQL_ASSOC)
             : false;
+    }
+
+    public function getMap(array $columns, $table, array $criteria = [], array $orderby = [])
+    {
+        if (sizeof($columns) > 2) {
+            throw new DatabaseException("Must select 2 columns to create a map");
+        }
+
+        $map = [];
+        $results = $this->getResults(...func_get_args());
+
+        foreach ($results as $result) {
+            $field = array_shift($result);
+            $value = array_shift($result);
+            $map[$field] = $value;
+        }
+
+        return $map;
     }
 
     /**
@@ -319,8 +340,7 @@ class Database extends AbstractMysqlDatabase
         // to show the columns in a MySQL database we need to run a SHOW COLUMNS FROM $table query.
         // none of the functions above build such a query, so we'll just run it directly here.
 
-        $this->setTypesAndBindings([$table]);
-        $results = $this->runQuery("SHOW COLUMNS FROM ?");
+        $results = $this->runQuery("SHOW COLUMNS FROM $table");
         if($results === false) return false;
 
         // if we're still here then we've received results from the runQuery() method.  those results
@@ -329,7 +349,7 @@ class Database extends AbstractMysqlDatabase
 
         $columns = [];
         $results = $results->fetch_all(MYSQL_NUM);
-        foreach($results as $row) $columns = $row[0];
+        foreach($results as $row) $columns[] = $row[0];
         return $columns;
     }
 
@@ -340,8 +360,7 @@ class Database extends AbstractMysqlDatabase
         // values.
 
         $this->resetQuery();
-        $this->setTypesAndBindings([$table, $column]);
-        $results = $this->runQuery("SHOW COLUMNS FROM ? LIKE ?");
+        $results = $this->runQuery("SHOW COLUMNS FROM $table LIKE $column");
         if($results === false) return false;
 
         // the first index of the $results is the structure of our enum column.  it's in the form of

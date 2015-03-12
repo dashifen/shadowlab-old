@@ -1,14 +1,14 @@
 <?php
 
-namespace Shadowlab\Domains\Cheatsheets\Matrix\Programs;
+namespace Shadowlab\Domains\Cheatsheets\Matrix\SpriteDatabase;
 
 use Shadowlab\Interfaces\Domain\Factory;
 
-class ProgramsFactory implements Factory
+class SpriteDatabaseFactory implements Factory
 {
     public function newEntity(array $data)
     {
-        return new ProgramsEntity($data);
+        return new SpriteDatabaseEntity($data);
     }
 
     public function newCollection(array $data)

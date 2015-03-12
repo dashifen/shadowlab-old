@@ -8,6 +8,6 @@ class Blank extends AbstractResponse
 {
     protected function handleBlank()
     {
-        $this->setView('Blank', [ 'title' => '', 'username' => '' ]);
+        $this->setView('Blank', [ 'title' => '', 'username' => '', 'message_type' => '' ]);
     }
 }

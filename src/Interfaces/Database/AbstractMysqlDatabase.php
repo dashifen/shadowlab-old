@@ -95,6 +95,7 @@ abstract class AbstractMysqlDatabase implements Database, Mysql
     abstract public function getCol($column, $table, array $criteria = [], array $orderby = []);
     abstract public function getRow(array $columns, $table, array $criteria = [], array $orderby = []);
     abstract public function getResults(array $columns, $table, array $criteria = [], array $orderby = []);
+    abstract public function getMap(array $columns, $table, array $criteria = [], array $orderby = []);
     abstract public function insert($table, array $values);
     abstract public function update($table, array $values, array $criteria = []);
     abstract public function delete($table, array $criteria = [], $limit = null, $offset = null);

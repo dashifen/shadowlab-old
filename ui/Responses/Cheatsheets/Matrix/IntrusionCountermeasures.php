@@ -2,7 +2,7 @@
 
 	<p>We could not find any intrusion countermeasures in the database at this time.  Frankly, this is probably 
 	just a bug.  Unless Dash deleted his own databases.  Either way, try going back a page and then returning to 
-	this one using the same link or button as last time.  If we still couldn't find any actions, then contact Dash 
+	this one using the same link or button as last time.  If we still couldn't find any IC, then contact Dash 
 	and he'll get to the bottom of it.</p>
 
 <?php } else { ?>

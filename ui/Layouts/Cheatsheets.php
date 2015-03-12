@@ -25,6 +25,7 @@
     <link rel="manifest" href="/assets/images/favicons/manifest.json">
 
     <script type="text/javascript" src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	
     <link href="//fonts.googleapis.com/css?family=Iceland:400,700|Droid+Sans:400,700|Droid+Serif:400italic,700italic" rel="stylesheet" type="text/css">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/styles.css" rel="stylesheet" type="text/css">

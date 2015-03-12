@@ -77,6 +77,11 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\Programs')
         ];
 
+        $di->params['Shadowlab\Actions\Cheatsheets\Matrix\SpriteDatabaseAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpriteDatabase\SpriteDatabase'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\SpriteDatabase')
+        ];
+
         $di->params['Shadowlab\Actions\Cheatsheets\IndexOtherAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexOther')

@@ -132,6 +132,7 @@ abstract class AbstractResponse implements Response
     public function handle404()
     {
         $this->response->status->set(404);
+        $this->data["message_type"] = "error404";
         $this->data["title"] = "Huh?";
 
         $content = <<<EOC
@@ -155,6 +156,8 @@ EOC;
     {
         $this->response->status->set(500);
         $this->data["title"] = "Uhm... Crap.";
+        $this->data["message_type"] = "error";
+
 
         // most of the time, our payload will have an exception within it when an error has occurred.  but,
         // there are some cases where this won't have happened.  in those cases, we'll end up using the $message
