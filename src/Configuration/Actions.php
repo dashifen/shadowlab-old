@@ -42,15 +42,33 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexCombat')
         ];
 
+        /*
+         * MAGIC SHEETS
+         */
+
         $di->params['Shadowlab\Actions\Cheatsheets\IndexMagicAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexMagic')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\AdeptPowersAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptPowers\AdeptPowers'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\AdeptPowers')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\AdeptWaysAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWays'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\AdeptWays')
         ];
 
         $di->params['Shadowlab\Actions\Cheatsheets\Magic\SpellsAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spells\Spells'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Spells')
         ];
+
+        /*
+         * MATRIX SHEETS
+         */
 
         $di->params['Shadowlab\Actions\Cheatsheets\IndexMatrixAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
@@ -86,6 +104,10 @@ class Actions extends Config
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\SpritePowers\SpritePowers'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Matrix\SpritePowers')
         ];
+
+        /*
+         * OTHER SHEETS
+         */
 
         $di->params['Shadowlab\Actions\Cheatsheets\IndexOtherAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),

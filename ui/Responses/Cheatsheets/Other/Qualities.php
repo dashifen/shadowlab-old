@@ -120,7 +120,13 @@
 						through Initiation, he may use this discount every time he adds two points to his Magic 
 						Rating.</p>
 						
-						<ul><li><?= join("</li><li>", $powers) ?></li></ul>
+						<ul>
+							<?php foreach($powers as $power) {
+								$name = strtolower(preg_replace("/[\s\W]+/", "_", $power)); ?>
+								<li><a class="dialog" href="/cheatsheets/magic/adept-powers?name=<?= $name ?>"><?= $power ?></a></li>
+							<?php } ?>
+						</ul>
+						
 					<?php } ?>
 					
 					

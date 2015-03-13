@@ -37,6 +37,30 @@ class Domains extends Config
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\CheatsheetsEntity')
         ];
 
+        /*
+         * MAGIC SHEETS
+         */
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\AdeptPowers\AdeptPowers'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptPowers\AdeptPowersFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptPowers\AdeptPowersFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptPowers\AdeptPowersGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\AdeptPowers\AdeptPowersFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptPowers\AdeptPowersEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWays'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWaysFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWaysFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWaysGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWaysFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWaysEntity')
+        ];
+
         $di->params['Shadowlab\Domains\Cheatsheets\Magic\Spells\Spells'] = [
             'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spells\SpellsFilter'),
             'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spells\SpellsFactory'),
@@ -44,8 +68,12 @@ class Domains extends Config
         ];
 
         $di->params['Shadowlab\Domains\Cheatsheets\Magic\Spells\SpellsFilter'] = [
-            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spells\MatrixActionsEntity')
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spells\SpellsEntity')
         ];
+
+        /*
+         * MATRIX SHEETS
+         */
 
         $di->params['Shadowlab\Domains\Cheatsheets\Matrix\ComplexForms\ComplexForms'] = [
             'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Matrix\ComplexForms\ComplexFormsFilter'),
