@@ -123,7 +123,7 @@
 						<ul>
 							<?php foreach($powers as $power) {
 								$name = strtolower(preg_replace("/[\s\W]+/", "_", $power)); ?>
-								<li><a class="dialog" href="/cheatsheets/magic/adept-powers?name=<?= $name ?>"><?= $power ?></a></li>
+								<li><a class="dialog" href="/cheatsheets/magic/adept-powers?name=<?= $name ?>&title=<?= $power ?>"><?= $power ?></a></li>
 							<?php } ?>
 						</ul>
 						

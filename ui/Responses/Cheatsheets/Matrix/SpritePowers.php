@@ -38,7 +38,7 @@
 			</tr>
 			<tr class="b description hidden <?= $i%2==0?"odd":"even" ?>" data-name="<?= $critter_power ?>">
 				<td colspan="4" class="padb">
-					<div id="<?= $critter_power ?>">
+					<div id="<?= strtolower(preg_replace("/[\s\W]+/", "_", $critter_power)); ?>">
 						<p><?=nl2br($description)?></p>
 						<p>(p. <?= $page ?>, <?= $abbr ?>)</p>
 					</div>

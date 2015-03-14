@@ -59,8 +59,9 @@
 					<tr class="b headers">
 						<th colspan="2" scope="row" class="r">Powers:</th>
 						<td colspan="4" class="commas">
-							<?php foreach ($powers as $power) { ?>
-								<span><a href="/cheatsheets/matrix/sprite-powers?name=<?= $power ?>" class="dialog"><?= $power ?></a></span>
+							<?php foreach ($powers as $power) {
+                                $name = strtolower(preg_replace("/[\s\W]+/", "_", $power)); ?>
+								<span><a href="/cheatsheets/matrix/sprite-powers?name=<?= $name ?>&title=<?= $power ?>" class="dialog"><?= $power ?></a></span>
 							<?php } ?>
 						</td>
 					</tr>

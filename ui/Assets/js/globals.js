@@ -28,14 +28,15 @@ var Globals = Class.extend({
 		event.stopPropagation();
 		event.preventDefault();
 		
-		var a    = $(event.target);
-		var url  = $.url(a.attr("href"));
-		var name = url.param()["name"];
-		var href = url.attr("path") + " #" + name;
+		var a     = $(event.target);
+		var url   = $.url(a.attr("href"));
+		var name  = url.param()["name"];
+        var title = url.param()["title"];
+		var href  = url.attr("path") + " #" + name;
 		
 		this.dialog.load(href, null, function(text) {
 			
-			this.dialog.dialog("option", "title", name);
+			this.dialog.dialog("option", "title", title);
 			this.dialog.dialog("option", "dialogClass", "");
 			this.dialog.dialog("open");
 			
