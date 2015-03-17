@@ -561,7 +561,7 @@ class Database extends AbstractMysqlDatabase
                 break;
 
             default:
-                $okay = array_search($operator, array("<", "<=", "=", "=>", ">")) !== false;
+                $okay = array_search($operator, array("<", "<=", "=", "=>", ">", "!=")) !== false;
                 break;
         }
 

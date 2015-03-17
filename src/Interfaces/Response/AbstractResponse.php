@@ -5,6 +5,7 @@ namespace Shadowlab\Interfaces\Response;
 use Aura\View\View;
 use Aura\Web\Request;
 use Aura\Web\Response as WebResponse;
+use Shadowlab\Exceptions\DatabaseException;
 use Shadowlab\Exceptions\ResponsePropertyNotFoundException;
 use Shadowlab\Interfaces\Domain\Payload;
 
@@ -134,14 +135,14 @@ abstract class AbstractResponse implements Response
         $this->response->status->set(404);
         $this->data["message_type"] = "error404";
         $this->data["title"] = "Huh?";
+        $this->view->setView("Blank");
 
         $content = <<<EOC
             <p><strong>File Not Found</strong>:<br><em>A Haiku from the Internet to You</em></p>
             <p>You step in the stream,<br>But the water has moved on.<br>This page is not here.</p>
 EOC;
 
-        $this->view->setView("Blank");
-        $this->response->content->set($content);
+        $this->data["message"] = $content;
     }
 
     public function unauthorized()
@@ -157,7 +158,7 @@ EOC;
         $this->response->status->set(500);
         $this->data["title"] = "Uhm... Crap.";
         $this->data["message_type"] = "error";
-
+        $this->view->setView("Blank");
 
         // most of the time, our payload will have an exception within it when an error has occurred.  but,
         // there are some cases where this won't have happened.  in those cases, we'll end up using the $message
@@ -165,11 +166,16 @@ EOC;
 
         if ($this->payload != null) {
             $e = $this->payload->getPayload('exception');
-            if($e instanceof \Exception) $message = $e->getMessage();
+            if ($e instanceof \Exception) {
+                $message = $e->getMessage();
+            }
+            if ($e instanceof DatabaseException) {
+                $format = '<br><strong>%s:</strong> %s';
+                $message .= sprintf($format, "Query", $e->getQuery());
+            }
         }
 
-        $this->view->setView("Blank");
-        $this->response->content->set($message);
+        $this->data["message"] = $message;
     }
 
     protected function handleUnknown()

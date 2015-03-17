@@ -5,7 +5,10 @@ form.searchbar {
 		
 		label {
 			display: inline-block;
-			margin-right: 1rem;
+			
+			&:not(.checkbox) {
+				margin-right: 1rem;
+			}
 		}
 		
 		ol, li {

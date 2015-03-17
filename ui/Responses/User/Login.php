@@ -26,7 +26,8 @@
         </li>
         <li>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" value="" class="w33">
+            <input type="password" id="password" name="password" value="" class="w33"><br>
+            <a href="/accounts/reset">Forgot Password?</a>
         </li>
     </ol>
 

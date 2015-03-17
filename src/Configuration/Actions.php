@@ -61,9 +61,24 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\AdeptWays')
         ];
 
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\MentorSpiritsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\MentorSpirits\MentorSpirits'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\MentorSpirits')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\MetamagicsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Metamagics\Metamagics'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Metamagics')
+        ];
+
         $di->params['Shadowlab\Actions\Cheatsheets\Magic\SpellsAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spells\Spells'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Spells')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\SpiritPowersAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\SpiritPowers\SpiritPowers'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\SpiritPowers')
         ];
 
         /*
