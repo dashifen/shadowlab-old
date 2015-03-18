@@ -81,6 +81,11 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\SpiritPowers')
         ];
 
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\SpiritsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spirits\Spirits'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Spirits')
+        ];
+
         /*
          * MATRIX SHEETS
          */

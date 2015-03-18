@@ -10,7 +10,7 @@
 	<form class="searchbar">
 	<fieldset>
 	<ol>
-		<li><label for="name">Search by name:</label><input type="text" id="name" name="name" value=""></li>
+		<li><label for="name">Search by power</label><input type="text" id="name" name="name" value=""></li>
 		<li>
 			<select id="book" name="book">
 				<option value="all">All Books</option>
@@ -56,8 +56,11 @@
 				data-book="<?= $book_id ?>"
 			>
 				<td colspan="6" class="padb">
-					<p><?= nl2br($description) ?></p>
-					<p>(p. <?= $page ?>, <?= $abbr ?>)</p>
+					<?php $name = strtolower(preg_replace("/[\s\W]+/", "_", $critter_power)); ?>
+					<div id="<?= $name ?>">
+						<p><?= nl2br($description) ?></p>
+						<p>(p. <?= $page ?>, <?= $abbr ?>)</p>
+					</div>
 				</td>
 			</tr>
 		<?php } ?>

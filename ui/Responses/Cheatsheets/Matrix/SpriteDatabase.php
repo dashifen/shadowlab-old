@@ -19,7 +19,7 @@
 					<label for="level_<?=$critter_id?>">Level:</label>
 					<select id="level_<?=$critter_id?>">
 						<option value="0"></option>
-						<? for($i=1; $i<=12; $i++) { ?>
+						<?php for($i=1; $i<=12; $i++) { ?>
 							<option value="<?=$i?>"><?=$i?></option>
 						<? } ?>
 					</select>
@@ -60,7 +60,7 @@
 						<th colspan="2" scope="row" class="r">Powers:</th>
 						<td colspan="4" class="commas">
 							<?php foreach ($powers as $power) {
-                                $name = strtolower(preg_replace("/[\s\W]+/", "_", $power)); ?>
+								$name = strtolower(preg_replace("/[\s\W]+/", "_", $power)); ?>
 								<span><a href="/cheatsheets/matrix/sprite-powers?name=<?= $name ?>&title=<?= $power ?>" class="dialog"><?= $power ?></a></span>
 							<?php } ?>
 						</td>
@@ -103,7 +103,7 @@
 				} else {
 					header.addClass("no-form").parents(".sprite").find("[data-original]").each(function() {
 						$(this).text($(this).data("original"));
-					});
+					}).parents(".sprite").find("select").prop("selectedIndex", 0);
 				}
 			});
 			
@@ -134,7 +134,9 @@
 							text = text.replace("x", "*");
 						}
 						
-						cell.text(eval(text));
+						var text = eval(text);
+						if(text <= 0) text = 1;
+						cell.text(text);
 					}
 				});
 				

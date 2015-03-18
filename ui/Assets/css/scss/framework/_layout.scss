@@ -44,9 +44,9 @@ i.fa span {
 .b { border-bottom: 1px solid #000; }
 .l { border-left:   1px solid #000; }
 
-.alignleft   { text-align: left;   }
-.alignright  { text-align: right;  }
-.aligncenter { text-align: center; }
+.alignleft   { text-align: left   !important; }
+.alignright  { text-align: right  !important; }
+.aligncenter { text-align: center !important; }
 
 .dib { display: inline-block; }
 
