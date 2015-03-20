@@ -111,6 +111,16 @@ class Domains extends Config
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Spirits\SpiritsEntity')
         ];
 
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Traditions\Traditions'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Traditions\TraditionsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Traditions\TraditionsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Traditions\TraditionsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Traditions\TraditionsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Traditions\TraditionsEntity')
+        ];
+
         /*
          * MATRIX SHEETS
          */
