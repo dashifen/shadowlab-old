@@ -122,17 +122,20 @@ abstract class AbstractEntity implements Entity
     }
 
     /**
+     * @param array $except
      * @return array
      */
-    public static function getProperties()
+    public static function getProperties(array $except = [])
     {
         $reflection = new \ReflectionClass(get_called_class());
         $properties = $reflection->getProperties();
 
-        foreach ($properties as &$property) {
+        $temp = [];
+        foreach ($properties as $property) {
             $property = $property->getName();
+            if(array_search($property, $except)===false) $temp[] = $property;
         }
 
-        return $properties;
+        return $temp;
     }
 }

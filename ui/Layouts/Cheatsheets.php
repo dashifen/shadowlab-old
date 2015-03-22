@@ -52,7 +52,7 @@
 					<ul class="submenu">
 						<li><a href="/cheatsheets/combat/called-shots">Called Shots</a></li>
 						<li><a href="/cheatsheets/combat/called-shots-ammo">Called Shots: Ammo</a></li>
-						<li><a href="/cheatsheets/combat/called-shots-location">Called Shots: Locations</a></li>
+						<li><a href="/cheatsheets/combat/called-shots-locations">Called Shots: Locations</a></li>
 						<li><a href="/cheatsheets/combat/combat-actions">Combat Actions</a></li>
 						<li><a href="/cheatsheets/combat/martial-arts-styles">Martial Arts Styles</a></li>
 						<li><a href="/cheatsheets/combat/martial-arts-techniques">Martial Arts Techniques</a></li>
@@ -122,9 +122,9 @@
 
 <script type="text/javascript" src="/Assets/js/3rd-party/jquery.purl.min.js"></script>
 <script type="text/javascript" src="/Assets/js/3rd-party/jquery.class.min.js"></script>
-<script type-"text/javascript" src="/assets/js/utilities/summarize.min.js"></script>
+<script type="text/javascript" src="/assets/js/utilities/summarize.min.js"></script>
 <script type="text/javascript" src="/assets/js/utilities/searchbar.min.js"></script>
-<script type-"text/javascript" src="/assets/js/globals.min.js"></script>
+<script type="text/javascript" src="/assets/js/globals.min.js"></script>
 
 <div id="dialog"></div>
 </body>

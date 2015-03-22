@@ -81,8 +81,6 @@ table {
 	}
 }
 		
-		
-
 form {
 	fieldset {
 		background: #faf7f7;
@@ -119,15 +117,25 @@ form {
 			&:not(.no-colon):after { content: ":"; }
 		}
 		
-		
-		
 		button {
 			margin-left: .5rem;
 		}
+	}
+}
+
+.columns {
+	column-count: 2;
+	column-gap: 1rem;
 	
+	&.three-columns {
+		column-count: 3;
 	}
 	
+	&.four_columns {
+		column-count: 4;
+	}
 }
+
 		
 
 

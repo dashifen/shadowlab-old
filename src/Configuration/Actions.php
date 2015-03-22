@@ -27,7 +27,17 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\User\Login')
         ];
 
+        $di->params['Shadowlab\Actions\User\LogoutAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\User\Logout')
+        ];
+
         $di->params['Shadowlab\Actions\User\AuthenticateAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\User\Login')
+        ];
+
+        $di->params['Shadowlab\Actions\User\AutoAuthenticateAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
             'http'   => $di->lazyNew('Shadowlab\Responses\User\Login')
         ];
@@ -37,9 +47,43 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Index')
         ];
 
+        /*
+         * COMBAT SHEETS
+         */
+
         $di->params['Shadowlab\Actions\Cheatsheets\IndexCombatAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\IndexCombat')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Combat\CalledShotsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShots\CalledShots'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Combat\CalledShots')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Combat\CalledShotsAmmoAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsAmmo\CalledShotsAmmo'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Combat\CalledShotsAmmo')
+        ];
+        
+        $di->params['Shadowlab\Actions\Cheatsheets\Combat\CalledShotsLocationsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsLocations\CalledShotsLocations'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Combat\CalledShotsLocations')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Combat\CombatActionsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CombatActions\CombatActions'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Combat\CombatActions')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Combat\MartialArtsAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArts\MartialArts'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Combat\MartialArts')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Combat\MartialArtsTechniquesAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniques'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Combat\MartialArtsTechniques')
         ];
 
         /*

@@ -13,5 +13,5 @@ interface Entity
     public function setArrayIndex($key, $index, $value);
     public function setAll(array $data);
 
-    public static function getProperties();
+    public static function getProperties(array $except = []);
 }

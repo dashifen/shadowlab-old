@@ -36,7 +36,71 @@ class Domains extends Config
         $di->params['Shadowlab\Domains\Cheatsheets\CheatsheetsFilter'] = [
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\CheatsheetsEntity')
         ];
+        
+        /*
+         * COMBAT SHEETS
+         */
 
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CalledShots\CalledShots'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShots\CalledShotsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShots\CalledShotsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShots\CalledShotsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CalledShots\CalledShotsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShots\CalledShotsEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CalledShotsAmmo\CalledShotsAmmo'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsAmmo\CalledShotsAmmoFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsAmmo\CalledShotsAmmoFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsAmmo\CalledShotsAmmoGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CalledShotsAmmo\CalledShotsAmmoFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsAmmo\CalledShotsAmmoEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CalledShotsLocations\CalledShotsLocations'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsLocations\CalledShotsLocationsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsLocations\CalledShotsLocationsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsLocations\CalledShotsLocationsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CalledShotsLocations\CalledShotsLocationsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CalledShotsLocations\CalledShotsLocationsEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CombatActions\CombatActions'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CombatActions\CombatActionsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CombatActions\CombatActionsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CombatActions\CombatActionsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\CombatActions\CombatActionsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\CombatActions\CombatActionsEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\MartialArts\MartialArts'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArts\MartialArtsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArts\MartialArtsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArts\MartialArtsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\MartialArts\MartialArtsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArts\MartialArtsEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniques'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniquesFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniquesFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniquesGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniquesFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniquesEntity')
+        ];
+        
         /*
          * MAGIC SHEETS
          */

@@ -40,7 +40,11 @@ vendor
 
 public/adminer.php
 public/test.php
+
+src/Actions/User/AutoAuthenticateAction.php
+
 config.php
+
 
 
 
