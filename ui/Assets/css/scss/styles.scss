@@ -8,132 +8,159 @@
 @import "sections/footer";
 
 html {
-	box-sizing: border-box;
-	background: url("../images/background-light.jpg") repeat;
-	font: 15px/1.33 'Droid Sans', sans-serif;
-	height: 100%;
+    box-sizing: border-box;
+    background: url("../images/background-light.jpg") repeat;
+    font: 15px/1.33 'Droid Sans', sans-serif;
+    height: 100%;
 }
 
 *, *:before, *:after {
-	box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 body {
-	height: 100%;
-	margin: 0 auto;
-	max-width: 1050px;
-	overflow-x: hidden;
-	width: 90%;
+    height: 100%;
+    margin: 0 auto;
+    max-width: 1050px;
+    overflow-x: hidden;
+    width: 90%;
 }
 
 a {
-	text-decoration: underline;
-	&:link, &:visited { color: #900; }
-	&:active, &:focus, &:hover { color: #F00; }
+    text-decoration: underline;
+    &:link, &:visited {
+        color: #900;
+    }
+    &:active, &:focus, &:hover {
+        color: #F00;
+    }
 }
 
 abbr span {
-	@extend .visuallyhidden;
+    @extend .visuallyhidden;
 }
 
 em {
-	font-family: 'Droid Serif', serif;
-	font-size: .9em;							/* em sizing is intentional */
+    font-family: 'Droid Serif', serif;
+    font-size: .9em; /* em sizing is intentional */
 }
 
 .no-list {
-	list-style-type: none;
-	margin:  0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 li + li {
-	margin-top: .5rem;
+    margin-top: .5rem;
 }
 
 table {
-	td, th {
-		padding: .33rem;
-		text-align: left;
-		vertical-align: top;
-	}
-	
-	thead th {
-		background-color: #333;
-		color: #fff;
-		text-align: left;
-		vertical-align: bottom;
-	}
-	
-	tbody.with-color th {
-		background-color: #DDD;
-		color: #333;
-		text-align: right;
-		vertical-align: top;
-	}
-	
-	th {
-		font-weight: bold;
-	}
-	
-	tr.even {
-		background-color: #e4e4e4;
-	}
+    td, th {
+        padding: .33rem;
+        text-align: left;
+        vertical-align: top;
+    }
+
+    thead th {
+        background-color: #333;
+        color: #fff;
+        text-align: left;
+        vertical-align: bottom;
+    }
+
+    tbody.with-color th {
+        background-color: #DDD;
+        color: #333;
+        text-align: right;
+        vertical-align: top;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+    tr.even {
+        background-color: #e4e4e4;
+    }
 }
-		
+
 form {
-	fieldset {
-		background: #faf7f7;
-		border: 1px solid #000;
-		padding: 1rem;
-		position: relative;
-		
-		legend {
-			label {
-				@extend h2;
-				font-weight: bold;
-				padding: 0 .5rem;
-			}
-			
-			& + * {
-				margin-top: 0;
-			}
-		}
-	
-		ol, p {
-			@extend .no-list;
-			padding-left: .5rem;
-			margin-bottom: 1rem;
-		}
-		
-		li {
-			margin-bottom: .5rem;
-		}
-		
-		label {
-			display: block;
-			font-weight: bold;
-			
-			&:not(.no-colon):after { content: ":"; }
-		}
-		
-		button {
-			margin-left: .5rem;
-		}
-	}
+    fieldset {
+        background: #faf7f7;
+        border: 1px solid #000;
+        padding: 1rem;
+        position: relative;
+
+        legend {
+            label {
+                @extend h2;
+                font-weight: bold;
+                padding: 0 .5rem;
+            }
+
+            & + * {
+                margin-top: 0;
+            }
+        }
+
+        ol, p {
+            @extend .no-list;
+            padding-left: .5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: .5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+
+            &:not(.no-colon) span:after {
+                content: ":";
+            }
+
+            strong,
+            &.error {
+                color: #900;
+                display: block;
+            }
+
+            &.required {
+                position: relative;
+
+                i.fa-star {
+                    right: -1px;
+                }
+            }
+        }
+
+        button {
+            margin-left: .5rem;
+        }
+    }
+
+    i.fa-star {
+        color: #a01a1e;
+        font-size: 0.85rem;
+        position: relative;
+        top: -1px;
+    }
 }
 
 .columns {
-	column-count: 2;
-	column-gap: 1rem;
-	
-	&.three-columns {
-		column-count: 3;
-	}
-	
-	&.four_columns {
-		column-count: 4;
-	}
+    column-count: 2;
+    column-gap: 1rem;
+
+    &.three-columns {
+        column-count: 3;
+    }
+
+    &.four_columns {
+        column-count: 4;
+    }
 }
 
 		

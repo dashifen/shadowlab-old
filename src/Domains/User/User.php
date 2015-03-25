@@ -3,6 +3,7 @@
 namespace Shadowlab\Domains\User;
 
 use Shadowlab\Exceptions\DomainException;
+use Shadowlab\Exceptions\EntityException;
 use Shadowlab\Interfaces\Domain\Filter;
 use Shadowlab\Interfaces\Domain\Gateway;
 use Shadowlab\Interfaces\Domain\Factory;
@@ -42,15 +43,15 @@ class User extends AbstractDomain
      **/
     public function authenticate($username, $password)
     {
-        $record  = "";
+        $record = "";
 
         try {
             // to authenticate a user, we create an entity out of the username we've received.
             // then, we'll see if we can find it in the database.
 
-            $entity = $this->factory->newEntity([ 'username' => $username ]);
-            $record = $this->gateway->select([ $entity ]);
-            if($record !== false) {
+            $entity = $this->factory->newEntity(['username' => $username]);
+            $record = $this->gateway->select([$entity]);
+            if ($record !== false) {
 
                 // if we did find a record for the specified user, we'll need to see if the hashed
                 // version of the password in the database matches the $password that the visitor entered.
@@ -58,7 +59,7 @@ class User extends AbstractDomain
                 $is_authentic = password_verify($password, $record['password']);
                 if ($is_authentic) return $this->payload->found(['user' => $record]);
             }
-        } catch (\Exception $e) {
+        } catch (EntityException $e) {
             return $this->payload->error([
                 "exception" => $e,
                 "username"  => $username,
@@ -66,7 +67,29 @@ class User extends AbstractDomain
             ]);
         }
 
-        return $this->payload->notFound([ 'username' => $username ]);
+        return $this->payload->notFound(['username' => $username]);
+    }
+
+    public function lookUp(array $data = [])
+    {
+        // given an array of $data that describes a user, we want to create an UserEntity and
+        // then see if we can find a record of that entity in the database.  if so, then we can
+        // return that payload to the
+
+        try {
+            $entity = $this->factory->newEntity($data);
+            $record = $this->gateway->select([$entity]);
+            $payload = $record !== false
+                ? $this->payload->found(["user" => $record])
+                : $this->payload->notFound([]);
+        } catch (EntityException $e) {
+            $payload = $this->payload->error([
+                "exception" => $e,
+                "data"      => $data
+            ]);
+        }
+
+        return $payload;
     }
 
     /**

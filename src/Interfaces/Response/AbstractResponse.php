@@ -2,12 +2,12 @@
 
 namespace Shadowlab\Interfaces\Response;
 
-use Aura\View\View;
 use Aura\Web\Request;
 use Aura\Web\Response as WebResponse;
 use Shadowlab\Exceptions\DatabaseException;
 use Shadowlab\Exceptions\ResponsePropertyNotFoundException;
 use Shadowlab\Interfaces\Domain\Payload;
+use Shadowlab\View\View;
 
 /**
  * Class AbstractResponse

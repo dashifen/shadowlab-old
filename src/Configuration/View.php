@@ -13,7 +13,7 @@ class View extends Config
     {
         $this->findUIRoot();
 
-        $di->params['Aura\View\View'] = array(
+        $di->params['Shadowlab\View\View'] = array(
             'view_registry'   => $di->lazyNew('Aura\View\TemplateRegistry', [ 'map' => $this->findViews()  ]),
             'layout_registry' => $di->lazyNew('Aura\View\TemplateRegistry', [ 'map' => $this->findLayout() ]),
             'helpers'         => $di->lazyNew('Aura\View\HelperRegistry'),

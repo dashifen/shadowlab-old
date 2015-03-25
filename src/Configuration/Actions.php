@@ -22,6 +22,10 @@ class Actions extends Config
             'request' => $di->lazyNew('Aura\Web\Request')
         ];
 
+        /*
+         * USER ACTIONS
+         */
+
         $di->params['Shadowlab\Actions\User\LoginAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
             'http'   => $di->lazyNew('Shadowlab\Responses\User\Login')
@@ -41,6 +45,20 @@ class Actions extends Config
             'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
             'http'   => $di->lazyNew('Shadowlab\Responses\User\Login')
         ];
+
+        $di->params['Shadowlab\Actions\User\Accounts\ResetAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\User\Accounts\Reset')
+        ];
+
+        $di->params['Shadowlab\Actions\User\Accounts\LookUpAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\User\Accounts\Reset')
+        ];
+
+
+
+
 
         $di->params['Shadowlab\Actions\Cheatsheets\IndexAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Cheatsheets'),

@@ -10,7 +10,7 @@ class Responses extends Config
     public function define(Container $di)
     {
         $di->params['Shadowlab\Interfaces\Response\AbstractResponse'] = [
-            'view'     => $di->lazyNew('Aura\View\View'),
+            'view'     => $di->lazyNew('Shadowlab\View\View'),
             'request'  => $di->lazyNew('Aura\Web\Request'),
             'response' => $di->lazyNew('Aura\Web\Response'),
         ];

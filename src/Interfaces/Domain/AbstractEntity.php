@@ -115,7 +115,7 @@ abstract class AbstractEntity implements Entity
 
         if (sizeof($skipped) > 0) {
             $skipped = join(", ", array_keys($skipped));
-            throw new EntityException("Unknown entities: " . $skipped);
+            throw new EntityException("Unknown property: " . $skipped);
         }
 
         return true;

@@ -19,13 +19,16 @@
         again.
     <?php } ?>
 
+
+    <p>Required fields are marked <i class="fa fa-fw fa-star"><span>required</span></i></p>
+
     <ol>
         <li>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="<?= $this->username?>" class="w33">
+            <?= $this->printLabel("username", self::REQUIRED) ?>
+            <input type="text" id="username" name="username" value="<?= $this->getValue("username") ?>" class="w33">
         </li>
         <li>
-            <label for="password">Password</label>
+            <?= $this->printLabel("password", self::REQUIRED) ?>
             <input type="password" id="password" name="password" value="" class="w33"><br>
             <a href="/accounts/reset">Forgot Password?</a>
         </li>

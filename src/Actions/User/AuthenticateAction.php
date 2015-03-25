@@ -21,7 +21,7 @@ class AuthenticateAction extends AbstractAction
         $retval = null;
         $username = $this->request->post->get("username");
         $password = $this->request->post->get("password");
-        $payload  = $this->domain->authenticate($username, $password);
+        $payload = $this->domain->authenticate($username, $password);
 
         $type = $payload->getType();
         if ($type != "Found") $this->http->setPayload($payload);
@@ -34,7 +34,8 @@ class AuthenticateAction extends AbstractAction
         switch ($type) {
             case 'NotFound':
                 $this->http->setData([
-                    'username' => $username,
+                    'errors'   => ["username" => "We were unable to log you in with those credentials.<br>Please try again."],
+                    'values'   => ["username" => $username],
                     'attempts' => $this->getLoginAttempts(),
                     'heading'  => 'Login Failed'
                 ]);
