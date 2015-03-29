@@ -21,6 +21,21 @@ class Database extends Config
             ? $config["database"]["prod"]
             : $config["database"]["dev"];
 
+        $mysqli = new \mysqli(
+            $dbconfig['host'],
+            $dbconfig['user'],
+            $dbconfig['pass'],
+            $dbconfig['name'],
+            $dbconfig['port']
+        );
+
+        $di->params['Shadowlab\Database\Database'] = [
+            'db' => $di->lazyValue('mysqli')
+        ];
+
+        $di->values["mysqli"] = $mysqli;
+
+        /*
         $di->params['mysqli'] = [
             'host'     => $dbconfig['host'],
             'user'     => $dbconfig['user'],
@@ -33,6 +48,7 @@ class Database extends Config
         $di->params['Shadowlab\Database\Database'] = [
             'db' => $di->lazyNew('mysqli')
         ];
+        */
     }
 }
 

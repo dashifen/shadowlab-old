@@ -60,8 +60,6 @@ class Cheatsheets extends AbstractDomain
         }
     }
 
-
-
     /**
      * @param Filter $filter
      * @throws DomainException

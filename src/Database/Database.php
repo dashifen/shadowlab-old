@@ -57,7 +57,8 @@ class Database extends AbstractMysqlDatabase
 
             try {
                 $statement = $this->db->prepare($query);
-                if ($statement === false) {
+
+                if ($statement == false) {
                     throw new DatabaseException('Unable to execute query: ' . $this->db->error, $query);
                 }
 
@@ -74,18 +75,22 @@ class Database extends AbstractMysqlDatabase
                 // we'll switch the ? SQL placeholders for %s's and then we can use vsprintf() to make
                 // a fully complete query for our error report.
 
-                $query = str_replace("?", "%s", $query);
-                $query = vsprintf($query, $this->bindings);
+                if ($type_count > 0) {
+                    $query = str_replace("?", "%s", $query);
+                    $query = vsprintf($query, $this->bindings);
+                }
+
                 throw new DatabaseException('Unable to execute query: ' . $this->db->error, $query, $e);
             }
 
-            // $success is boolean so if it's true, we want to actually get our results.
-            // otherwise, we'll set it explicitly to false before closing our statement and
-            // then return our results.
-
-            $results = $success
-                ? $statement->get_result()
-                : false;
+            if ($success) {
+                $action  = strstr($query, " ", true);
+                $results = array_search($action, ["INSERT", "UPDATE", "DELETE"]) !== false
+                    ? $statement->affected_rows
+                    : $statement->get_result();
+            } else {
+                $results = false;
+            }
 
             $statement->close();
             return $results;
@@ -225,13 +230,13 @@ class Database extends AbstractMysqlDatabase
         // (part of) the query, we'll use the method below as a builder here and in upsert() below.
 
         $query = $this->buildInsert($table, $values);
-        $results = $this->runQuery($query);
-        if($results === false) return false;
+        $affected_rows = $this->runQuery($query);
+        if($affected_rows == false) return false;
 
         // if we only affected a single row, then we'll return that row's id.  otherwise, we return true
         // and the calling scope will need to figure out what it wants to do from there.
 
-        return $this->getAffectedRows()==1
+        return $affected_rows == 1
             ? $this->getInsertedId()
             : true;
     }
@@ -261,16 +266,13 @@ class Database extends AbstractMysqlDatabase
         $query .= join(", ", $temp) . ' ';
 
         if(sizeof($criteria) > 0) $query .= "WHERE " . $this->buildWhere($criteria) . " ";
-        $results = $this->runQuery($query);
+        $affected_rows = $this->runQuery($query);
 
-        // we'll return the number of affected rows from this method.  in a lot of cases this might
-        // double for a boolean (i.e. if we updated 6 rows then the returned number is truthy) but it
-        // could be problematic if there were zero rows affected.  but, that's sort of like a failed
-        // query so maybe that's okay.
+        // updating zero rows is the same as not updating.  thus, if our $affected_rows variable is
+        // false-y we'll explicitly convert it to false.  otherwise, we'll return the count of affected
+        // rows.
 
-        return $results !== false
-            ? $this->getAffectedRows()
-            : false;
+        return $affected_rows != false ? $affected_rows : false;
     }
 
     /**
@@ -289,10 +291,9 @@ class Database extends AbstractMysqlDatabase
         if($limit != null)  $query .= "LIMIT {$limit} ";
         if($offset != null) $query .= "OFFSET {$offset} ";
 
-        $results = $this->runQuery($query);
-        return $results !== false
-            ? $this->getAffectedRows()
-            : false;
+        $affected_rows = $this->runQuery($query);
+
+        return $affected_rows != false ? $affected_rows : false;
     }
 
     /**
@@ -327,10 +328,8 @@ class Database extends AbstractMysqlDatabase
         // works, we return the number of affected rows
 
         $this->setTypesAndBindings($updates);
-        $results = $this->runQuery($query);
-        return $results !== false
-            ? $this->getAffectedRows()
-            : false;
+        $affected_rows = $this->runQuery($query);
+        return $affected_rows != false ? $affected_rows : false;
     }
 
     public function getColumns($table)

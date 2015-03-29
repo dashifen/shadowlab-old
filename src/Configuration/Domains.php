@@ -14,7 +14,9 @@ class Domains extends Config
         ];
 
         $di->params['Shadowlab\Interfaces\Domain\AbstractDomain'] = [
-            'payload' => $di->lazyNew('Shadowlab\Interfaces\Domain\Payloads\PayloadFactory'),
+            'payload'  => $di->lazyNew('Shadowlab\Interfaces\Domain\Payloads\PayloadFactory'),
+            'listener' => $di->lazyNew('Shadowlab\Listener\Listener'),
+            'emitter'  => $di->lazyNew('League\Event\Emitter')
         ];
 
         $di->params['Shadowlab\Domains\User\User'] = [

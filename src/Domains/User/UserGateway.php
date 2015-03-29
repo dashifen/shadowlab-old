@@ -52,7 +52,7 @@ class UserGateway extends AbstractGateway
      */
     public function insert(Entity $entity)
     {
-        if (!($entity instanceof UserEntity)) {
+        if ($entity instanceof UserEntity) {
             $values = $entity->getAllExcept(['user_id']);
             $user_id = $this->db->insert("users", $values);
             return $user_id;
@@ -72,7 +72,7 @@ class UserGateway extends AbstractGateway
      */
     public function update(Entity $entity)
     {
-        if (!($entity instanceof UserEntity)) {
+        if ($entity instanceof UserEntity) {
             $values = $entity->getAllExcept(['user_id']);
             $key = ['user_id' => $entity->get('user_id')];
             $success = $this->db->update("users", $values, $key);
@@ -89,7 +89,7 @@ class UserGateway extends AbstractGateway
      */
     public function delete(Entity $entity)
     {
-        if (!($entity instanceof UserEntity)) {
+        if ($entity instanceof UserEntity) {
             $key = ['user_id' => $entity->get('user_id')];
             $success = $this->db->delete("users", $key, 1);
             return $success;

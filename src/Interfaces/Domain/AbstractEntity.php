@@ -39,7 +39,12 @@ abstract class AbstractEntity implements Entity
      */
     public function getAllExcept(array $except)
     {
+        // this function returns the properties of this Entity except for those that are empty
+        // or specified in the $except argument.  array_filter() can remove the empties and then
+        // a foreach loop will do the rest.
+
         $properties = $this->getAll();
+        $properties = array_filter($properties, function($x) { return !empty($x); });
 
         foreach ($except as $property) {
             if (isset($properties[$property])) {

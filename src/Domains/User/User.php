@@ -70,6 +70,10 @@ class User extends AbstractDomain
         return $this->payload->notFound(['username' => $username]);
     }
 
+    /**
+     * @param array $data
+     * @return \Shadowlab\Interfaces\Domain\Payload
+     */
     public function lookUp(array $data = [])
     {
         // given an array of $data that describes a user, we want to create an UserEntity and
@@ -77,11 +81,15 @@ class User extends AbstractDomain
         // return that payload to the
 
         try {
-            $entity = $this->factory->newEntity($data);
-            $record = $this->gateway->select([$entity]);
-            $payload = $record !== false
-                ? $this->payload->found(["user" => $record])
-                : $this->payload->notFound([]);
+            $entity  = $this->factory->newEntity($data);
+            $record  = $this->gateway->select([$entity]);
+
+            if ($record != false) {
+                $account = $this->factory->newEntity($record);
+                $payload = $this->payload->found(["account" => $account]);
+            } else {
+                $payload = $this->payload->notFound(["account" => $entity]);
+            }
         } catch (EntityException $e) {
             $payload = $this->payload->error([
                 "exception" => $e,
@@ -90,6 +98,68 @@ class User extends AbstractDomain
         }
 
         return $payload;
+    }
+
+    /**
+     * @param UserEntity $account
+     * @param string $server
+     * @return \Shadowlab\Interfaces\Domain\Payload
+     * @throws EntityException
+     */
+    public function resetAccount(UserEntity $account, $server)
+    {
+        // to reset an account is to remove its password and to create a reset vector for it.  that
+        // vector is then mailed to the owner of the account so that they can replace the password and
+        // regain access to the ShadowLab.  to create our vector, we'll just grab 10 characters from
+        // the md5 hash of a unique ID.
+
+        $data = $account->getAllExcept(["password", "created_on", "last_update"]);
+
+        $vector = substr(md5(uniqid("vector", true)), 0, 10);
+        $data["reset_vector"] = $vector;
+        $data["password"] = "NULL";
+
+        $entity  = $this->factory->newEntity($data);
+        $success = $this->gateway->update($entity);
+
+        if ($success) {
+            $payload = $this->payload->updated(["account" => $entity]);
+
+            // when we've reset an account, we also need to send an email to the account's holder
+            // related to this reset.
+
+            $this->emitter->emit("sendEmail", [
+                "message"   => $this->getResetMessage($entity, $server),
+                "recipient" => $account->get("email_address"),
+                "subject"   => "ShadowLab Account Reset"
+            ]);
+        } else {
+            $payload = $this->payload->notUpdated(["account" => $entity]);
+        }
+
+        return $payload;
+    }
+
+    protected function getResetMessage(UserEntity $entity, $server)
+    {
+        // the path to our Messages folder is below.  we go up three folders (into Domains then src and then
+        // the application root folder) and then descend into the /ui/Messages folder.  in that folder, we grab
+        // the contents of the reset.html file.
+
+        $path = realpath(__DIR__ . "/../../../ui/Messages");
+        $template = file_get_contents($path . "/reset.html");
+
+        // within our $template are three variables:  username, url, and vector.  we pass the corresponding
+        // values for those variables along with our $template into the convertTemplate method and then return
+        // our parametrized message.
+
+        $message = $this->convertTemplate($template, [
+            "username" => $entity->get("username"),
+            "url"      => "http://" . $server . "/accounts/reconfirm",
+            "vector"   => $entity->get("reset_vector"),
+        ]);
+
+        return $message;
     }
 
     /**

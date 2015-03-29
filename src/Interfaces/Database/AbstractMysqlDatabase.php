@@ -36,7 +36,7 @@ abstract class AbstractMysqlDatabase implements Database, Mysql
 
     public function __destruct()
     {
-        $this->db->close();
+        //$this->db->close();
     }
 
     /**

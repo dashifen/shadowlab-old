@@ -90,7 +90,7 @@ class Dispatcher
         $this->sendResponse($response);
     }
 
-    public function notFound()
+    protected function notFound()
     {
        $this->response->handle404();
     }
@@ -98,7 +98,7 @@ class Dispatcher
     /**
      * @param AbstractRoute $route
      */
-    public function unauthorized(AbstractRoute $route)
+    protected function unauthorized(AbstractRoute $route)
     {
         $this->session->set('AFTER_LOGIN_RETURN_TO', $route->getPath());
         $this->response->unauthorized();

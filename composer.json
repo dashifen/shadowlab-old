@@ -18,9 +18,11 @@
   },
 
   "require": {
-    "aura/di":     "~2.1",
-    "aura/web":    "~2.0",
-    "aura/view":   "~2.0"
+    "aura/di":      "~2.1",
+    "aura/web":     "~2.0",
+    "aura/view":    "~2.0",
+    "league/event": "~2.0",
+    "phpmailer/phpmailer": "~5.2"
   },
 
   "require-dev": {
