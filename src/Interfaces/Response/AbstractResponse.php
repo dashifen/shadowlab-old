@@ -50,7 +50,9 @@ abstract class AbstractResponse implements Response
 
         $this->data = [
             'title'   => '',
-            'heading' => ''
+            'heading' => '',
+            'errors'  => [],
+            'values'  => []
         ];
     }
 

@@ -12,38 +12,42 @@ class LookUpAction extends AbstractAction
     protected $domain;
 
     /**
-     * @var \Shadowlab\Responses\User\Accounts\Reset
+     * @var \Shadowlab\Responses\User\Accounts\LookUp
      */
     protected $http;
 
     public function execute()
     {
-        // this action handles any look-up of a person's account based on some set of information.
-        // currently, it's in-use only during the password-reset process where we receive an email
-        // address and want to find the user account that corresponds to it.  therefore, we're
-        // simply using the Reset response at the moment, though we'll need to generalize this later
-        // if/when we need to perform look-ups for other reasons.
-
         $email = $this->request->post->get("email_address");
         $account = $this->domain->lookUp(["email_address" => $email]);
 
         // $account is either a found or notFound.  if it's notFound then we're done and we'll let
         // the visitor know that they probably entered the wrong email address.  but, if it's found
-        // then we need to actually perform our reset.
+        // then we need to perform one of two actions based on the existence of a a reset vector
+        // within the posted data.
 
         if ($account->getType() == "Found") {
-            $account = $this->domain->resetAccount(
-                $account->getPayload("account"), $this->request->server->get('SERVER_NAME')
-            );
+            $reset_vector = $this->request->post->get("reset_vector");
+            $account = $account->getPayload("account");
+
+            if (empty($reset_vector)) {
+                $account = $this->domain->resetAccount($account, $this->request->server->get('SERVER_NAME'));
+            } else {
+                $account = $this->domain->confirmVector($account, $reset_vector);
+            }
+
         }
 
-        // after the reset, $account is now either an updated or a notUpdated payload.  or, if it
-        // wasn't found at all, then it's still the notFound payload from the lookUp action above.
-        // regardless, we'll send it over to our response and send that response back to the
-        // visitor.
+        // after the above block we have a few options for our $account.  it could be any of the following
+        // payloads:  notFound, notUpdated, notValid, Updated, or Valid.  regardless, we pass the information
+        // related to our our Response and let it handle things based on the payload type as normal.
 
         $this->http->setPayload($account);
-        $this->http->setData(["values" => ["email_address" => $email]]);
+
+        $this->http->setData([
+            "values" => ["email_address" => $email, "reset_vector" => $reset_vector]
+        ]);
+
         return $this->http->execute();
     }
 }

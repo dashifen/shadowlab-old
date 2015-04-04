@@ -261,11 +261,23 @@ class Database extends AbstractMysqlDatabase
 
         $temp = [];
         $columns = array_keys($values);
-        $query = "UPDATE {$table} SET ";
-        foreach($columns as $column) $temp[] = "{$column} = ?";
-        $query .= join(", ", $temp) . ' ';
+        $values = array_values($values);
 
+        $query = "UPDATE {$table} SET ";
+        foreach ($columns as $i => $column) {
+
+            // if the value we're setting at this column is NULL then we can just specify that here.
+            // otherwise, we want to specify a question mark which, along with the types and bindings
+            // properties, is used to set this column to a non-NULL value.
+
+            $temp[] = $values[$i] === "NULL"
+                ? $column . " = NULL"
+                : $column . " = ?";
+        }
+
+        $query .= join(", ", $temp) . ' ';
         if(sizeof($criteria) > 0) $query .= "WHERE " . $this->buildWhere($criteria) . " ";
+
         $affected_rows = $this->runQuery($query);
 
         // updating zero rows is the same as not updating.  thus, if our $affected_rows variable is
@@ -320,7 +332,18 @@ class Database extends AbstractMysqlDatabase
         $temp = [];
         $query .= " ON DUPLICATE KEY UPDATE ";
         if(sizeof($updates)==0) $updates = $values;
-        foreach($updates as $column => $value) $temp[] = "{$column} = ?";
+
+        foreach ($updates as $column => $value) {
+
+            // just like when building an UPDATE query above, we cna cram NULL values right into our
+            // query here.  otherwise, we add a question mark which, along with the types and bindings
+            // properties, will update non-NULL values.
+
+            $temp[] = $value === "NULL"
+                ? $column . " = NULL"
+                : $column . " = ?";
+        }
+
         $query .= join(", ", $temp);
 
         // the last thing we do before we execute our query is to make sure the values we just added to
@@ -409,10 +432,23 @@ class Database extends AbstractMysqlDatabase
      */
     protected function buildInsert($table, $values)
     {
-        $columns = array_keys($values);
         $this->setTypesAndBindings($values);
-        $query  = "INSERT INTO {$table} (" . join(", ", $columns) . ") VALUES ";
-        $query .= "(" . join(", ", array_fill(0, sizeof($columns), '?')) . ")";
+
+        $columns = array_keys($values);
+        $values  = array_values($values);
+        $query   = "INSERT INTO {$table} (" . join(", ", $columns) . ") VALUES ";
+
+        $temp = [];
+        foreach ($values as $value) {
+
+            // if our $value is NULL then we can simply put it into our query verbatim.  otherwise,
+            // we need to add a question mark which, along with our types and bindings properties, will
+            // insert a non NULL value.
+
+            $temp[] = $value === "NULL" ? "NULL" : "?";
+        }
+
+        $query .= "(" . join(", ", $temp) . ")";
         return $query;
     }
 
@@ -624,6 +660,10 @@ class Database extends AbstractMysqlDatabase
         foreach($parameters as $parameter) {
             if(is_array($parameter)) $this->setTypesAndBindings($parameter);
             else {
+                if ($parameter == "NULL") {
+                    continue;
+                }
+
                 // we assume that this parameter is a string first.  then, if it's numeric in any
                 // way, we see if it's an integer or a floating point number.  unfortunately, since
                 // this information is going to come to us as a PHP string, we can't use is_int()

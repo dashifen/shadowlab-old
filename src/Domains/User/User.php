@@ -123,15 +123,18 @@ class User extends AbstractDomain
         $success = $this->gateway->update($entity);
 
         if ($success) {
-            $payload = $this->payload->updated(["account" => $entity]);
-
             // when we've reset an account, we also need to send an email to the account's holder
             // related to this reset.
 
-            $this->emitter->emit("sendEmail", [
+            $message_success = $this->emitter->emit("sendEmail", [
                 "message"   => $this->getResetMessage($entity, $server),
                 "recipient" => $account->get("email_address"),
                 "subject"   => "ShadowLab Account Reset"
+            ]);
+
+            $payload = $this->payload->updated([
+                "message" => $message_success,
+                "account" => $entity,
             ]);
         } else {
             $payload = $this->payload->notUpdated(["account" => $entity]);
@@ -140,6 +143,11 @@ class User extends AbstractDomain
         return $payload;
     }
 
+    /**
+     * @param UserEntity $entity
+     * @param $server
+     * @return string
+     */
     protected function getResetMessage(UserEntity $entity, $server)
     {
         // the path to our Messages folder is below.  we go up three folders (into Domains then src and then
@@ -160,6 +168,81 @@ class User extends AbstractDomain
         ]);
 
         return $message;
+    }
+
+    /**
+     * @param UserEntity $account
+     * @param string $reset_vector
+     * @return \Shadowlab\Interfaces\Domain\Payload
+     */
+    public function confirmVector(UserEntity $account, $reset_vector)
+    {
+        // confirming that the account matches the reset vector is simple.  in fact, it's so simple,
+        // that we can do it in one line.  the $account has the reset vector currently in the database.
+        // therefore, we only need to see if the account's vector matches the $reset_vector argument
+        // either a NotValid or a Valid payload as follows:
+
+        return $account->get("reset_vector") != $reset_vector
+            ? $this->payload->notValid(["account" => $account])
+            : $this->payload->valid(["account" => $account]);
+    }
+
+    /**
+     * @param $password
+     * @param $confirmation
+     * @return \Shadowlab\Interfaces\Domain\Payload
+     */
+    public function isPasswordValid($password, $confirmation)
+    {
+        // there are two things to check for here:  (1) that the password matches the confirmation and
+        // (2) that the password meets the necessary criteria.  the first one is easy:
+
+        if ($password == $confirmation) {
+
+            // the criteria that our password much match are as follows:  it must have lower case letters,
+            // capital letters, at least one number, and be at least ten characters long.  the following
+            // regular expression matches each of those criteria.  thus, if you password matches the
+            // expression, then we're good to go.
+
+            $match = preg_match('/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/', $password);
+            if ($match) {
+                $payload = $this->payload->valid([]);
+            } else {
+                $payload = $this->payload->notValid(["error" => "Your password did not meet all of the criteria."]);
+            }
+        } else {
+            $payload = $this->payload->notValid(["error" => "Your password didn't match its confirmation."]);
+        }
+
+        return $payload;
+    }
+
+    /**
+     * @param UserEntity $account
+     * @param string $password
+     * @return \Shadowlab\Interfaces\Domain\Payload
+     * @throws EntityException
+     */
+    public function setPassword(UserEntity $account, $password)
+    {
+        // given an account and a password, we make sure the former uses the latter.  we can also
+        // remove the database record of any reset vector because we both don't need it anymore and
+        // we don't want to give people a way to potentially reset an account by guessing the reset
+        // vector.
+
+        $entity = $this->factory->newEntity([
+            "user_id"      => $account->get("user_id"),
+            "password"     => password_hash($password, PASSWORD_DEFAULT),
+            "reset_vector" => "NULL"
+        ]);
+
+        $success = $this->gateway->update($entity);
+
+        $payload = !$success
+            ? $this->payload->notUpdated(["account" => $account])
+            : $this->payload->updated(["account" => $account]);
+
+        return $payload;
     }
 
     /**

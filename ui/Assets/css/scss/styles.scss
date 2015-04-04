@@ -1,11 +1,14 @@
 @import "framework/normalize";
 @import "framework/boilerplate";
 @import "framework/layout";
+
 @import "sections/header";
 @import "sections/mainmenu";
 @import "sections/main";
 @import "sections/searchbar";
 @import "sections/footer";
+
+@import "addons/password-strength";
 
 html {
     box-sizing: border-box;
@@ -47,7 +50,7 @@ em {
 
 .no-list {
     list-style-type: none;
-    margin: 0;
+    margin:  0;
     padding: 0;
 }
 

@@ -53,10 +53,18 @@ class Actions extends Config
 
         $di->params['Shadowlab\Actions\User\Accounts\LookUpAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
-            'http'   => $di->lazyNew('Shadowlab\Responses\User\Accounts\Reset')
+            'http'   => $di->lazyNew('Shadowlab\Responses\User\Accounts\LookUp')
         ];
 
+        $di->params['Shadowlab\Actions\User\Accounts\ReconfirmAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\User\Accounts\Reconfirm')
+        ];
 
+        $di->params['Shadowlab\Actions\User\Accounts\UnlockAction'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\User\User'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\User\Accounts\Unlock')
+        ];
 
 
 

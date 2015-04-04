@@ -21,5 +21,6 @@ class UserFilter extends AbstractFilter
     public function filterInsert() { }
     public function filterUpdate() { }
     public function filterDelete() { }
+
     public function validate() { }
 }

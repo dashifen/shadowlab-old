@@ -4,10 +4,10 @@ namespace Shadowlab\Responses\User\Accounts;
 
 use Shadowlab\Interfaces\Response\AbstractResponse;
 
-class Reset extends AbstractResponse
+class Reconfirm extends AbstractResponse
 {
     protected function handleBlank()
     {
-        $this->setView('User\Accounts\Reset\Reset', ["title" => "Reset Account"]);
+        $this->setView('User\Accounts\Reconfirm\Reconfirm', ["title" => "Reconfirm Account"]);
     }
 }

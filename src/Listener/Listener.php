@@ -15,8 +15,10 @@ class Listener extends AbstractListener
         $name = $event->getName();
         $method = "handle" . ucfirst($name);
         if (method_exists($this, $method)) {
-            $this->{$method}($parameters);
+            return $this->{$method}($parameters);
         }
+
+        return false;
     }
 
     protected function handleSendEmail(array $parameters = null)
@@ -26,31 +28,26 @@ class Listener extends AbstractListener
         $config = function() use ($path) { return require $path . "/config.php"; };
         $config = $config();
 
-        $message = new \PHPMailer();
+        $mail = new \PHPMailer();
+        //$mail->SMTPDebug = 2;
+        //$mail->Debugoutput = "html";
 
-        $message->isSMTP();
-        $message->SMTPAuth = true;
-        $message->Host = "a2ss9.a2hosting.com";
-        $message->Username = "dashifen@dashifen.com";
-        $message->Password = $config["email_password"];
-        $message->SMTPSecure = "ssl";
-        $message->Port = 465;
+        $mail->isSMTP();
+        $mail->Host = "smtp.gmail.com";
+        $mail->SMTPSecure = "tls";
+        $mail->Port = 587;
 
-        $message->FromName = "The ShadowLab";
-        $message->From = "dashifen+shadowlab@gmail.com";
-        $message->Subject = $parameters["subject"];
-        $message->AltBody = strip_tags($parameters["message"]);
-        $message->Body = $parameters["message"];
+        $mail->SMTPAuth = true;
+        $mail->Username = "dashifen@gmail.com";
+        $mail->Password = $config["email_password"];
 
-        $message->addAddress($parameters["recipient"]);
+        $mail->setFrom("dashifen@gmail.com", "The ShadowLab by Dashifen");
+        $mail->addAddress($parameters["recipient"]);
 
-        if(!$message->send()) {
-            echo "Message could not be sent.<br>";
-            echo "Mailer Error: " . $message->ErrorInfo;
-        } else {
-            echo "Message sent.";
-        }
+        $mail->Subject = $parameters["subject"];
+        $mail->msgHTML($parameters["message"]);
+        $mail->AltBody = strip_tags($parameters["message"]);
 
-        die();
+        return $mail->send();
     }
 }
