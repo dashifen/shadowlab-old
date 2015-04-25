@@ -10,13 +10,11 @@ use Shadowlab\Interfaces\Route\AbstractRoute;
  */
 class GetRoute extends AbstractRoute
 {
-    /**
-     * @param string $path
-     * @param string $type
-     * @return bool
-     */
-    public function matchRoute($path, $type)
+    public function __construct($path, $action, $access)
     {
-        return $type == "GET" && $path == $this->path;
+        parent::__construct($path, $action, $access);
+        $this->method = "GET";
     }
+
+
 }

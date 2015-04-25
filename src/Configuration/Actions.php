@@ -131,6 +131,11 @@ class Actions extends Config
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\AdeptWays')
         ];
 
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\Enchantments'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Enchantments\Enchantments'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Enchantments')
+        ];
+
         $di->params['Shadowlab\Actions\Cheatsheets\Magic\MentorSpiritsAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\MentorSpirits\MentorSpirits'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\MentorSpirits')
@@ -139,6 +144,21 @@ class Actions extends Config
         $di->params['Shadowlab\Actions\Cheatsheets\Magic\MetamagicsAction'] = [
             'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Metamagics\Metamagics'),
             'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Metamagics')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\Entry\Rituals'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Rituals\Rituals'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Entry\Rituals')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\Rituals'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Rituals\Rituals'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Rituals')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Magic\Schools'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Schools\Schools'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Magic\Schools')
         ];
 
         $di->params['Shadowlab\Actions\Cheatsheets\Magic\SpellsAction'] = [

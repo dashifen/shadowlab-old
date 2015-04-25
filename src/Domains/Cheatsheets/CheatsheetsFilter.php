@@ -4,6 +4,7 @@ namespace Shadowlab\Domains\Cheatsheets;
 
 use Shadowlab\Exceptions\EntityException;
 use Shadowlab\Interfaces\Domain\AbstractFilter;
+use Shadowlab\Interfaces\Domain\Domain;
 use Shadowlab\Interfaces\Domain\Entity;
 
 class CheatsheetsFilter extends AbstractFilter
@@ -21,5 +22,6 @@ class CheatsheetsFilter extends AbstractFilter
     public function filterInsert() { }
     public function filterUpdate() { }
     public function filterDelete() { }
-    public function validate() { }
+    protected function setDomain(Domain $domain) { }
+    public function validate(Entity $entity, Domain $domain, $action = "insert") { }
 }

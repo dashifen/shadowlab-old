@@ -5,9 +5,9 @@
 	the same link or button as last time.  If we still couldn't find any of them, then contact Dash and he'll get
 	to the bottom of it.</p>
 
-<?php } else {   ?>
-
-	<form class="searchbar">
+<?php } else { ?>
+ 
+ 	<form class="searchbar">
 	<fieldset>
 	<ol>
 		<li><label for="name">Search by metamagic</label><input type="text" id="name" name="name" class="w15"></li>
@@ -58,8 +58,9 @@
 				data-book_id="<?= $book_id ?>"
 			>
 				<td colspan="4">
-					<p><?= nl2br($description) ?></p>
-					<p>(p. <?= $page ?>, <?= $abbr ?>)</p>
+					<div id="<?= strtolower(preg_replace("/[\s\W]+/", "_", $metamagic)) ?>">
+						<p><?= nl2br($description) ?></p><p>(p. <?= $page ?>, <?= $abbr ?>)</p>
+					</div>
 				</td>
 			</tr>
 		<?php }  ?>

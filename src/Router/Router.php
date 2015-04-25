@@ -54,18 +54,23 @@ class Router
     }
 
     /**
-     * @param Route $route
+     * @param Route $new_route
      * @throws RouteException
      */
-    public function addRoute(Route $route)
+    public function addRoute(Route $new_route)
     {
-        // this application only functions when each route contains a unique path.  therefore, before we
-        // ad this $route to the list of $routes, we'll double check to be sure it's unique and, if not
-        // we throw an exception.
+        // this application only functions when each route is a unique pairing of both path and request
+        // type (i.e. GET or POST).  but, we can have the same path as long as one uses the GET method and
+        // the other uses POST.  luckily, we have a matchRoute() method for our Route objects which we can
+        // use to be sure we don't have a problem right from the get-go.
 
-        $path = $route->getPath();
-        if (isset($this->routes[$path])) throw new RouteException("Duplicate route", $route);
-        $this->routes[$path] = $route;
+        foreach ($this->routes as $route) {
+            if ($new_route->matchRoute($route)) {
+                throw new RouteException("Duplicate route", $route);
+            }
+        }
+
+        $this->routes[$new_route->getPath()] = $new_route;
     }
 
     /**

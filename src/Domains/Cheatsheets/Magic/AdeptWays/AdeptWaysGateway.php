@@ -18,7 +18,7 @@ class AdeptWaysGateway extends AbstractGateway
         return $entities === null ? $this->selectAll() : $this->selectSome($entities);
     }
 
-    public function selectAll()
+    protected function selectAll()
     {
         $original_db = $this->db->getDatabase();
         $properties = AdeptWaysEntity::getProperties();
@@ -43,7 +43,7 @@ class AdeptWaysGateway extends AbstractGateway
         return $ways;
     }
 
-    public function selectSome(array $entities)
+    protected function selectSome(array $entities)
     {
 
     }

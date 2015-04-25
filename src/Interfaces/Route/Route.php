@@ -9,11 +9,10 @@ namespace Shadowlab\Interfaces\Route;
 interface Route
 {
     /**
-     * @param string $path
-     * @param string $type
+     * @param Route $route
      * @return bool
      */
-    public function matchRoute($path, $type);
+    public function matchRoute(Route $route);
 
     /**
      * @return bool
@@ -34,4 +33,9 @@ interface Route
      * @return string
      */
     public function getPath();
+
+    /**
+     * @return string
+     */
+    public function getMethod();
 }

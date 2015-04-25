@@ -45,7 +45,6 @@ abbr span {
 
 em {
     font-family: 'Droid Serif', serif;
-    font-size: .9em; /* em sizing is intentional */
 }
 
 .no-list {
@@ -115,11 +114,16 @@ form {
 
         li {
             margin-bottom: .5rem;
+			
+			button {
+				margin: 20px 0 0 0;
+			}
         }
 
         label {
             display: block;
             font-weight: bold;
+			padding-bottom: 0.25rem;
 
             &:not(.no-colon) span:after {
                 content: ":";
@@ -143,6 +147,30 @@ form {
         button {
             margin-left: .5rem;
         }
+		
+		fieldset {
+			border-style: none;
+			padding: 0;
+			
+			legend label {
+				font-size: 1rem;
+				font-weight: bold;
+				padding: 0 0 0.25rem;
+			}
+			
+			ol {
+				padding-left: 1.5rem;
+			}
+			
+			li {
+				margin-bottom: -0.5rem;
+			}
+
+			label {
+				font-weight: normal;
+				padding-bottom: 0;
+			}
+		}
     }
 
     i.fa-star {
@@ -166,6 +194,26 @@ form {
     }
 }
 
+ul, ol {
+	&.oxford {
+		display: inline-block;
+		list-style-type: none;
+		margin:  0;
+		padding: 0;
+		
+		li {
+			display: inline;
+		}
+		
+		&:not(.count-1) {
+			li:after { content: ", "; }
+			li:last-child:before { content: " and "; }
+			li:last-child:after  { content: ""; }
+		}
+		
+		&.count-2 li:after { content: ""; }
+	}
+}
 		
 
 

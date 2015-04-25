@@ -67,6 +67,14 @@ abstract class AbstractDomain implements Domain
     }
 
     /**
+     * @return array|bool
+     */
+    public function getBooks()
+    {
+        return $this->gateway->getMap(["book_id", "book"], "books", [], ["book"]);
+    }
+
+    /**
      * @param AbstractListener $listener
      */
     protected function setListener(AbstractListener $listener)

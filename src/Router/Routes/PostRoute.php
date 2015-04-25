@@ -10,13 +10,9 @@ use Shadowlab\Interfaces\Route\AbstractRoute;
  */
 class PostRoute extends AbstractRoute
 {
-    /**
-     * @param string $path
-     * @param string $type
-     * @return bool
-     */
-    public function matchRoute($path, $type)
+    public function __construct($path, $action, $access)
     {
-        return $type == "POST" && $path == $this->path;
+        parent::__construct($path, $action, $access);
+        $this->method = "POST";
     }
 }

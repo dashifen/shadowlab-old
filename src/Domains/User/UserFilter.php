@@ -4,7 +4,7 @@ namespace Shadowlab\Domains\User;
 
 use Shadowlab\Exceptions\EntityException;
 use Shadowlab\Interfaces\Domain\AbstractFilter;
-use Shadowlab\Interfaces\Domain\Entity;
+use Shadowlab\Interfaces\Domain\Domain;use Shadowlab\Interfaces\Domain\Entity;
 
 class UserFilter extends AbstractFilter
 {
@@ -20,7 +20,7 @@ class UserFilter extends AbstractFilter
     public function filterSelect() { }
     public function filterInsert() { }
     public function filterUpdate() { }
-    public function filterDelete() { }
+    public function filterDelete() { } protected function setDomain(Domain $domain) { }
 
-    public function validate() { }
+    public function validate(Entity $entity, Domain $domain, $action = "insert") { }
 }

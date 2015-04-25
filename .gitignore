@@ -36,14 +36,17 @@ crashlytics-build.properties
 
 ### Shadowlab ###
 public/assets
+public/pma
 vendor
 
+public/adminer.css
 public/adminer.php
 public/test.php
 
 src/Actions/User/AutoAuthenticateAction.php
-
 config.php
+
+
 
 
 

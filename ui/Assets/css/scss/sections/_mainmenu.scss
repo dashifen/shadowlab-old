@@ -62,9 +62,17 @@ nav.mainmenu {
 		text-align: left;
 		top: 100%;
 		
-		li:last-child a {
-			border-bottom-left-radius: 1rem;
-			border-bottom-right-radius: 1rem;
+		li {
+			height: 2rem;
+		}
+		
+		li:last-child {
+			height: 3rem;
+			
+			a {
+				border-bottom-left-radius: 1rem;
+				border-bottom-right-radius: 1rem;
+			}
 		}
 		
 		a {

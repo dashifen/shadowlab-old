@@ -127,6 +127,16 @@ class Domains extends Config
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\AdeptWays\AdeptWaysEntity')
         ];
 
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Enchantments\Enchantments'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Enchantments\EnchantmentsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Enchantments\EnchantmentsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Enchantments\EnchantmentsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Enchantments\EnchantmentsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Enchantments\EnchantmentsEntity')
+        ];
+
         $di->params['Shadowlab\Domains\Cheatsheets\Magic\MentorSpirits\MentorSpirits'] = [
             'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\MentorSpirits\MentorSpiritsFilter'),
             'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\MentorSpirits\MentorSpiritsFactory'),
@@ -145,6 +155,26 @@ class Domains extends Config
 
         $di->params['Shadowlab\Domains\Cheatsheets\Magic\Metamagics\MetamagicsFilter'] = [
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Metamagics\MetamagicsEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Rituals\Rituals'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Rituals\RitualsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Rituals\RitualsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Rituals\RitualsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Rituals\RitualsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Rituals\RitualsEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Schools\Schools'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Schools\SchoolsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Schools\SchoolsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Schools\SchoolsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Magic\Schools\SchoolsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Magic\Schools\SchoolsEntity')
         ];
 
         $di->params['Shadowlab\Domains\Cheatsheets\Magic\Spells\Spells'] = [

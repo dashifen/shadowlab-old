@@ -9,17 +9,21 @@ namespace Shadowlab\Interfaces\Route;
 abstract class AbstractRoute implements Route
 {
     /**
-     * @var string
+     * @var string - the name of the action that handles this route
      */
     protected $action = '';
     /**
-     * @var string
+     * @var string - whether this is a public or private route
      */
     protected $access = '';
     /**
-     * @var string
+     * @var string - the path (i.e. url) of the route
      */
     protected $path   = '';
+    /**
+     * @var string - the request method (i.e. GET or POST) of the route
+     */
+    protected $method;
 
     /**
      * @param $path
@@ -65,5 +69,20 @@ abstract class AbstractRoute implements Route
         return $this->path;
     }
 
-    abstract public function matchRoute($path, $type);
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param Route $route
+     * @return bool
+     */
+    public function matchRoute(Route $route)
+    {
+        return $route->getMethod() == $this->method && $route->getPath() == $this->path;
+    }
 }

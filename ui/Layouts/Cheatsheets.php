@@ -63,8 +63,11 @@
 					<ul class="submenu">
 						<li><a href="/cheatsheets/magic/adept-powers">Adept Powers</a></li>
 						<li><a href="/cheatsheets/magic/adept-ways">Adept Ways</a></li>
+						<li><a href="/cheatsheets/magic/enchantments">Enchantments</a></li>
 						<li><a href="/cheatsheets/magic/mentor-spirits">Mentor Spirits</a></li>
 						<li><a href="/cheatsheets/magic/metamagics">Metamagics</a></li>
+						<li><a href="/cheatsheets/magic/rituals">Rituals</a></li>
+						<li><a href="/cheatsheets/magic/schools-and-ways">Schools and Ways</a></li>
 						<li><a href="/cheatsheets/magic/spells">Spells</a></li>
 						<li><a href="/cheatsheets/magic/spirits">Spirits</a></li>
 						<li><a href="/cheatsheets/magic/spirit-powers">Spirit Powers</a></li>

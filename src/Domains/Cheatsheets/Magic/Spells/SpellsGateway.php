@@ -22,7 +22,7 @@ class SpellsGateway extends AbstractGateway
         return $entities === null ? $this->selectAll() : $this->selectSome($entities);
     }
 
-    public function selectAll()
+    protected function selectAll()
     {
         $properties = SpellsEntity::getProperties();
         array_walk($properties, [$this, "ticker"]);
@@ -35,7 +35,7 @@ class SpellsGateway extends AbstractGateway
         return $spells;
     }
 
-    public function selectSome(array $entities)
+    protected function selectSome(array $entities)
     {
 
     }

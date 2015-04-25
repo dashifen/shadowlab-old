@@ -62,9 +62,9 @@ abstract class AbstractEntity implements Entity
      */
     public function set($key, $value)
     {
-        if(property_exists($this, $key)) {
+        if (property_exists($this, $key)) {
             $this->{$key} = $value;
-        } else {
+        } elseif ($key != "isPost") {
             throw new EntityException("Unknown property: " . $key);
         }
     }

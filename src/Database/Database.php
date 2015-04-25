@@ -111,7 +111,7 @@ class Database extends AbstractMysqlDatabase
      * @return bool
      * @throws DatabaseException
      */
-    public function getVar($column, $table = null, array $criteria = [], array $orderby = [])
+    public function  getVar($column, $table = null, array $criteria = [], array $orderby = [])
     {
         if(!is_string($column)) throw new DatabaseException("Cannot use getVar() for multiple columns");
 
@@ -382,7 +382,7 @@ class Database extends AbstractMysqlDatabase
         // values.
 
         $this->resetQuery();
-        $results = $this->runQuery("SHOW COLUMNS FROM $table LIKE $column");
+        $results = $this->runQuery("SHOW COLUMNS FROM $table LIKE '$column'");
         if($results === false) return false;
 
         // the first index of the $results is the structure of our enum column.  it's in the form of
@@ -391,7 +391,10 @@ class Database extends AbstractMysqlDatabase
 
         $results = $results->fetch_row();
         $results = str_replace("'", "", str_replace("enum(", "", substr($results[1], 0, strlen($results[1])-1)));
-        return explode(",", $results);
+        $results = explode(",", $results);
+        sort($results);
+
+        return $results;
     }
 
     /**

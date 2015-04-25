@@ -18,7 +18,7 @@ class CalledShotsLocationsGateway extends AbstractGateway
         return $entities === null ? $this->selectAll() : $this->selectSome($entities);
     }
 
-    public function selectAll()
+    protected function selectAll()
     {
         $original_db = $this->db->getDatabase();
         $this->db->setDatabase("dashifen_shadowlab");
@@ -48,7 +48,7 @@ class CalledShotsLocationsGateway extends AbstractGateway
         return $locations;
     }
 
-    public function selectSome(array $entities)
+    protected function selectSome(array $entities)
     {
 
     }
