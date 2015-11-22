@@ -14,8 +14,15 @@ class Rituals extends AbstractResponse
 
         $tags = [];
         $books = [];
+								$prereqs = [];
+								$prereq_fields = [
+												"metamagics" => "prerequisite_metamagic", 
+												"schools" => "prerequisite_metamagic_school", 
+												"rituals" => "prerequisite_ritual",
+								];
 
         $rituals = $this->payload->getPayload('rituals');
+								
         foreach ($rituals as $ritual) {
             $book_id = $ritual['book_id'];
             if (!isset($books[$book_id])) {
@@ -28,15 +35,30 @@ class Rituals extends AbstractResponse
                     $tags[$tag_id] = $tag;
                 }
             }
-        }
+												
+												foreach ($prereq_fields as $field => $index) {
+																if (!empty($ritual[$index])) {
+																				if (!isset($prereqs[$field])) {
+																								$prereqs[$field] = [];
+																				}
+																				
+																				$prereqs[$field][] = $ritual[$index];
+																}
+												}
+								}
 
         asort($tags);
         asort($books);
+								foreach($prereqs as &$array) {
+												$array = array_unique($array);
+												sort($array);
+								}
 
         $this->setView('Cheatsheets\Magic\Rituals', [
             'tags'    => $tags,
             'books'   => $books,
             'rituals' => $rituals,
+												'prereqs' => $prereqs,
             'title'   => 'Rituals'
         ]);
     }

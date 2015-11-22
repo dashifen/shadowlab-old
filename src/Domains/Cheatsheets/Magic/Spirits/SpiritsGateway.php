@@ -78,6 +78,13 @@ class SpiritsGateway extends AbstractGateway
                 [ "critter_id" => $critter_id, "optional" => "Y" ],
                 [ "critter_power" ]
             );
+												
+												$spirit["traditions"] = $this->db->getCol(
+																"tradition",
+																"traditions_spirits INNER JOIN traditions USING (tradition_id)",
+																[ "critter_id" => $critter_id ],
+																[ "tradition" ]
+												);
         }
 
         $this->db->setDatabase($old_db);

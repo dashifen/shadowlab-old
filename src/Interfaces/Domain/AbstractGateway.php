@@ -3,22 +3,38 @@
 namespace Shadowlab\Interfaces\Domain;
 
 use Shadowlab\Interfaces\Database\AbstractMysqlDatabase;
+use Shadowlab\Exceptions\DatabaseException;
 
 abstract class AbstractGateway implements Gateway
 {
     protected $db;
 
+    /**
+     * @param AbstractMysqlDatabase $db
+     */
     public function __construct(AbstractMysqlDatabase $db)
     {
         $this->db = $db;
     }
 
+    /**
+     * @param $column
+     * @return string
+     */
     public function ticker(&$column)
     {
         $column = '`' . $column . '`';
         return $column;
     }
 
+    /**
+     * @param $column
+     * @param null $table
+     * @param array $criteria
+     * @param array $orderby
+     * @return mixed
+     * @throws DatabaseException
+     */
     public function getVar($column, $table = null, array $criteria = [], array $orderby = [])
     {
         $db = $this->db->getDatabase();
@@ -28,6 +44,14 @@ abstract class AbstractGateway implements Gateway
         return $var;
     }
 
+    /**
+     * @param $column
+     * @param $table
+     * @param array $criteria
+     * @param array $orderby
+     * @return mixed
+     * @throws DatabaseException
+     */
     public function getCol($column, $table, array $criteria = [], array $orderby = [])
     {
         $db = $this->db->getDatabase();
@@ -37,6 +61,14 @@ abstract class AbstractGateway implements Gateway
         return $col;
     }
 
+    /**
+     * @param array $columns
+     * @param $table
+     * @param array $criteria
+     * @param array $orderby
+     * @return mixed
+     * @throws DatabaseException
+     */
     public function getRow(array $columns, $table, array $criteria = [], array $orderby = [])
     {
         $db = $this->db->getDatabase();
@@ -46,6 +78,14 @@ abstract class AbstractGateway implements Gateway
         return $row;
     }
 
+    /**
+     * @param array $columns
+     * @param $table
+     * @param array $criteria
+     * @param array $orderby
+     * @return mixed
+     * @throws DatabaseException
+     */
     public function getResults(array $columns, $table, array $criteria = [], array $orderby = [])
     {
         $db = $this->db->getDatabase();
@@ -55,6 +95,14 @@ abstract class AbstractGateway implements Gateway
         return $results;
     }
 
+    /**
+     * @param array $columns
+     * @param $table
+     * @param array $criteria
+     * @param array $orderby
+     * @return mixed
+     * @throws DatabaseException
+     */
     public function getMap(array $columns, $table, array $criteria = [], array $orderby = [])
     {
         $db = $this->db->getDatabase();
@@ -64,6 +112,12 @@ abstract class AbstractGateway implements Gateway
         return $map;
     }
 
+    /**
+     * @param $table
+     * @param $column
+     * @return mixed
+     * @throws DatabaseException
+     */
     public function getEnumValues($table, $column)
     {
         $db = $this->db->getDatabase();
@@ -71,6 +125,14 @@ abstract class AbstractGateway implements Gateway
         $values = $this->db->getEnumValues($table, $column);
         $this->db->setDatabase($db);
         return $values;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getError()
+    {
+        return $this->db->getError();
     }
 
     abstract public function select(array $entities = null);

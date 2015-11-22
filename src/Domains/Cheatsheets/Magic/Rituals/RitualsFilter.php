@@ -125,6 +125,8 @@ class RitualsFilter extends AbstractFilter
                     break;
             }
         }
+
+        return $this->errors;
     }
 
     public function filterSelect()

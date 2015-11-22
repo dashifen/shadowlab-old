@@ -63,10 +63,18 @@ class View extends AuraView
      * @param string $default
      * @return string
      */
-    protected function getValue($value, $default="")
+    protected function getValue($value, $default="", $index=null)
     {
-        return isset($this->values) && is_array($this->values) && isset($this->values[$value])
-            ? $this->values[$value]
+        if (!isset($this->values) || !is_array($this->values) || !isset($this->values[$value])) {
+            return $default;
+        }
+
+        // if $index is null (as it usually is) then we are looking for a scalar value.  if it's not null,
+        // then we expect that $value is an array and we want to return the value of $index within it.
+
+        if($index === null) return $this->values[$value];
+        else return is_array($this->values[$value]) && isset($this->values[$value][$index])
+            ? $this->values[$value][$index]
             : $default;
     }
 }

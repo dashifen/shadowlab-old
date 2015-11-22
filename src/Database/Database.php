@@ -75,11 +75,7 @@ class Database extends AbstractMysqlDatabase
                 // we'll switch the ? SQL placeholders for %s's and then we can use vsprintf() to make
                 // a fully complete query for our error report.
 
-                if ($type_count > 0) {
-                    $query = str_replace("?", "%s", $query);
-                    $query = vsprintf($query, $this->bindings);
-                }
-
+                $query = $this->convertQuery($query, $type_count);
                 throw new DatabaseException('Unable to execute query: ' . $this->db->error, $query, $e);
             }
 
@@ -89,6 +85,8 @@ class Database extends AbstractMysqlDatabase
                     ? $statement->affected_rows
                     : $statement->get_result();
             } else {
+                $query = $this->convertQuery($query, $type_count);
+                $this->error = $this->db->error . " (Query: " . $query . ")";
                 $results = false;
             }
 
@@ -101,6 +99,17 @@ class Database extends AbstractMysqlDatabase
         // testing.
 
         throw new DatabaseException("Length of types and bindings unmatched");
+    }
+
+    protected function convertQuery($query, $type_count)
+    {
+        if ($type_count > 0) {
+            $query = str_replace("?", "%s", $query);
+            array_walk($this->bindings, function(&$x) { $x = '`' . $x . '`';});
+            $query = vsprintf($query, $this->bindings);
+        }
+
+        return $query;
     }
 
     /**
@@ -468,7 +477,7 @@ class Database extends AbstractMysqlDatabase
 
         $clauses = [];
 
-        if ($this->is_numerical($criteria)) {
+        if ($this->isNumerical($criteria)) {
 
             // to handle our multidimensional array, we simple loop over each criterion within it and
             // build a series of nested WHERE clauses.  these clauses are joined by a conjunction which
@@ -507,7 +516,7 @@ class Database extends AbstractMysqlDatabase
      * @param array $array
      * @return bool
      */
-    protected function is_numerical(array $array)
+    protected function isNumerical(array $array)
     {
         // a numerical array is one that's indexed by numbers.  we don't actually care if those numbers are
         // sequential in this case.  thus, we're just going to see if we have any non-numeric keys and, if
@@ -674,7 +683,13 @@ class Database extends AbstractMysqlDatabase
 
                 $type = "s";
                 if(is_numeric($parameter)) {
-                    $type = floor($parameter)==$parameter ? "i" : "f";
+                    if (floor($parameter) == $parameter) {
+                        $parameter = (int) $parameter;
+                        $type = "i";
+                    } else {
+                        $parameter = (float) $parameter;
+                        $type = "f";
+                    }
                 }
 
                 $this->bindings[] = $parameter;

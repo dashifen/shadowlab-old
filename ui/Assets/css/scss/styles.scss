@@ -53,7 +53,7 @@ em {
     padding: 0;
 }
 
-li + li {
+li:not(fieldset li) + li {
     margin-top: .5rem;
 }
 
@@ -85,6 +85,11 @@ table {
     tr.even {
         background-color: #e4e4e4;
     }
+	
+	tbody tr:not(.clicked):not(.description):hover td,
+	tbody tr:not(.clicked):not(.description):hover th {
+		background-color: #FFC;
+	}
 }
 
 form {
@@ -112,11 +117,13 @@ form {
             margin-bottom: 1rem;
         }
 
-        li {
-            margin-bottom: .5rem;
-			
+        li {			
 			button {
-				margin: 20px 0 0 0;
+				margin: 0;
+			}
+			
+			& + li {
+				margin-top: 2rem;
 			}
         }
 
@@ -159,19 +166,33 @@ form {
 			}
 			
 			ol {
+				margin-bottom: 0;
 				padding-left: 1.5rem;
+				
+				&.bold-labels label {
+					font-weight: bold;
+				}
 			}
 			
 			li {
-				margin-bottom: -0.5rem;
+				margin-top: 0;
 			}
-
+			
 			label {
 				font-weight: normal;
 				padding-bottom: 0;
 			}
+			
+			p {
+				margin-bottom: .2rem;
+				padding-left: 0;
+			}
 		}
     }
+	
+	optgroup {
+		padding-bottom: 1rem;
+	}
 
     i.fa-star {
         color: #a01a1e;

@@ -7,7 +7,26 @@
 
 <?php } else { ?>
 	
+	<form class="searchbar">
+				<fieldset>
+								<ol>
+												<li>
+																<label for="tradition">Search by Tradition:</label>
+																<select id="tradition" name="tradition">
+																				<option value="all">All Traditions</option>
+																				<?php foreach($this->traditions as $tradition) { ?>
+																							<option value="<?= preg_replace("/ |,|, /", "_", $tradition) ?>"><?= $tradition ?></option>
+																				<?php } ?>
+																</select>
+												</li>
+												<li><button type="reset"><i class="fa fa-fw fa-undo"></i> Reset</button></li>
+								</ol>
+				</fieldset>
+</form>
+	
 	<div style="overflow: hidden">
+					
+								
 
 		<?php foreach ($this->spirits as $i => $spirit) {
 			extract($spirit);
@@ -15,7 +34,9 @@
 			$attr_row_one = array_slice($attributes, 0, 8, true);
 			$attr_row_two = array_slice($attributes, 8, NULL, true); ?>
 		
-			<div class="spirit w50 relative">
+			<div class="spirit w50 relative"
+											data-tradition-list="<?= join(",", array_map(function($x) { return preg_replace("/ |,|, /", "_", $x); }, $traditions)) ?>"
+				>
 				<h3 class="no-form"><?= $critter ?></h3>
 
 				<form>
@@ -170,11 +191,11 @@
 					var cell = $(this);
 					var text = cell.data("original");
 					
-					if (value == 0) cell.text(text);
+					if (value === 0) cell.text(text);
 					else {
 						text = text.replace("F", value);
 						
-						if (text.indexOf("d6") != -1) {
+						if (text.indexOf("d6") !== -1) {
 							var matches = text.match(/(\d+)d6/);
 							var pool = matches[1];
 							
@@ -213,7 +234,28 @@
 					
 				$("a.dialog").click($.proxy(Globals.loadDialog, Globals));
 			});
-		});
+			
+				// the search bar features won't work right here because our bar displays 
+				// whole tables instead of rows within a table.  therefore, we'll add that
+				// behavior here.
+
+				$("#tradition").change(function() {
+								var tradition = $(this).val();
+								var spirits = $("div.spirit").removeClass("hidden");
+								if (tradition !== "all") {
+												spirits.each(function() {
+																var spirit = $(this);
+																if (!spirit.is("[data-tradition-list*=" + tradition + "]")) {
+																				spirit.addClass("hidden");
+																}
+												});
+								}
+				});
+				
+				$("button[type=reset]").click(function() {
+								$("div.spirit.hidden").removeClass("hidden");
+				});
+});
 		
 		function shuffle(array) {
 			// source: http://stackoverflow.com/a/2450976
@@ -237,4 +279,4 @@
 		}
 	</script>
 	
-<?php } ?>
+<?php }

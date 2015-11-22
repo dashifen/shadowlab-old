@@ -12,21 +12,28 @@ class Spirits extends AbstractResponse
         // we've found.  we'll loop over the spirits, collect our list of books, and then pass it all
         // over to the view.
 
-        $books  = [];
+        $books = [];
+								$traditions = [];
         $spirits = $this->payload->getPayload("spirits");
 
-        foreach ($spirits as $power) {
-            $book_id = $power["book_id"];
+        foreach ($spirits as $spirit) {
+            $book_id = $spirit["book_id"];
             if (!isset($books[$book_id])) {
-                $books[$book_id] = $power["book"];
+                $books[$book_id] = $spirit["book"];
             }
+												
+												$traditions = array_merge($traditions, $spirit["traditions"]);
         }
 
         arsort($books);
+								$traditions = array_unique($traditions);
+								sort($traditions);
+								
         $this->setView('Cheatsheets\Magic\Spirits', [
-            'title'   => 'Spirits',
-            'spirits' => $spirits,
-            'books'   => $books,
+            'title'      => 'Spirits',
+            'spirits'    => $spirits,
+												'traditions' => $traditions,
+            'books'      => $books,
         ]);
     }
 

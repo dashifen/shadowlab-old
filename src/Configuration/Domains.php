@@ -102,7 +102,41 @@ class Domains extends Config
         $di->params['Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniquesFilter'] = [
             'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Combat\MartialArtsTechniques\MartialArtsTechniquesEntity')
         ];
-        
+
+        /*
+         * GEAR SHEETS
+         */
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Gear\Vehicles\Vehicles'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Vehicles\VehiclesFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Vehicles\VehiclesFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Vehicles\VehiclesGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Gear\Vehicles\VehiclesFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Vehicles\VehiclesEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Gear\Weapons\Weapons'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Weapons\WeaponsFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Weapons\WeaponsFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Weapons\WeaponsGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Gear\Weapons\WeaponsFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Weapons\WeaponsEntity')
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessories'] = [
+            'filter'  => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessoriesFilter'),
+            'factory' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessoriesFactory'),
+            'gateway' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessoriesGateway'),
+        ];
+
+        $di->params['Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessoriesFilter'] = [
+            'entity' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessoriesEntity')
+        ];
+
         /*
          * MAGIC SHEETS
          */

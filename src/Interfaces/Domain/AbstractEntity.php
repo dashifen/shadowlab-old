@@ -44,7 +44,7 @@ abstract class AbstractEntity implements Entity
         // a foreach loop will do the rest.
 
         $properties = $this->getAll();
-        $properties = array_filter($properties, function($x) { return !empty($x); });
+        $properties = array_filter($properties, function($x) { return !empty($x) || (is_numeric($x) && $x==0); });
 
         foreach ($except as $property) {
             if (isset($properties[$property])) {

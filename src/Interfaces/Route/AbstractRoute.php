@@ -37,6 +37,11 @@ abstract class AbstractRoute implements Route
         $this->access = $access;
     }
 
+    public function __toString()
+    {
+        return sprintf("%s (%s, %s)", $this->path, strtoupper($this->method), $this->access);
+    }
+
     /**
      * @return bool
      */

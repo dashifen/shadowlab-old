@@ -46,6 +46,10 @@ public/test.php
 src/Actions/User/AutoAuthenticateAction.php
 config.php
 
+Thumbs.db
+desktop.ini
+nbproject
+
 
 
 

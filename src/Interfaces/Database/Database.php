@@ -10,6 +10,7 @@ interface Database
     public function getColumns($table);
     public function getAffectedRows();
     public function getInsertedId();
+    public function getError();
 
     public function runQuery($query);
 

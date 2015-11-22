@@ -27,6 +27,11 @@ abstract class AbstractMysqlDatabase implements Database, Mysql
     protected $distinct = false;
 
     /**
+     * @var string
+     */
+    protected $error = null;
+
+    /**
      * @param \mysqli $db
      */
     public function __construct(\mysqli $db)
@@ -77,6 +82,14 @@ abstract class AbstractMysqlDatabase implements Database, Mysql
     }
 
     /**
+     * @return string|null
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    /**
      * @return bool
      */
     public function isConnected()
@@ -84,6 +97,10 @@ abstract class AbstractMysqlDatabase implements Database, Mysql
         return !empty($this->database);
     }
 
+				/**
+				 * 
+				 * @param bool $distinct
+				 */
     public function setDistinct($distinct)
     {
         $distinct = $distinct ? true : false;

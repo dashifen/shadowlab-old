@@ -1,14 +1,14 @@
 <?php
 
-namespace Shadowlab\Domains\Cheatsheets\Gear\VehiclesAndDrones;
+namespace Shadowlab\Domains\Cheatsheets\Gear\Vehicles;
 
 use Shadowlab\Interfaces\Domain\Factory;
 
-class VehiclesAndDronesFactory implements Factory
+class VehiclesFactory implements Factory
 {
     public function newEntity(array $data)
     {
-        return new VehiclesAndDronesEntity($data);
+        return new VehiclesEntity($data);
     }
 
     public function newCollection(array $data)

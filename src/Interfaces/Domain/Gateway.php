@@ -16,4 +16,5 @@ interface Gateway
     public function getResults(array $columns, $table, array $criteria = [], array $orderby = []);
     public function getMap(array $columns, $table, array $criteria = [], array $orderby = []);
     public function getEnumValues($table, $column);
+    public function getError();
 }

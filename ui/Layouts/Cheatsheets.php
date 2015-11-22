@@ -59,6 +59,12 @@
 					</ul>
 				</li>
 				<li>
+					<a href="/cheatsheets/gear">Gear</a>
+					<ul class="submenu">
+						<li><a href="/cheatsheets/gear/vehicles-and-drones">Vehicles and Drones</a></li>
+					</ul>
+				</li>
+				<li>
 					<a href="/cheatsheets/magic">Magic</a>
 					<ul class="submenu">
 						<li><a href="/cheatsheets/magic/adept-powers">Adept Powers</a></li>

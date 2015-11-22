@@ -44,7 +44,7 @@ class Rituals extends AbstractAction
             // we will have to re-show the form.  doing so means we want to merge the payload's
             // data with the data the form needs before sending it all over to our response.
 
-            if ($payload->getType() != "inserted") {
+            if ($payload->getType() != "created") {
                 $payload_data = $payload->getPayload();
                 $form_data = $this->domain->getFormData();
                 $data = array_merge($payload_data, $form_data);

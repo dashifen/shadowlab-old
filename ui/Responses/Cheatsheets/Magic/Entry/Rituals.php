@@ -108,15 +108,13 @@ if (!isset($this->ritual_id) || !is_numeric($this->ritual_id)) { ?>
 		</li>
 		<li class="cleft fleft dib marr">
 			<?= $this->printLabel("book_id", self::REQUIRED, "Book"); ?>
-			<div class="select xxl">
-				<select id="book_id" name="book_id">
-					<option value=""></option>
-					<?php $current = $this->getValue("book_id", -1);
-					foreach ($this->books as $book_id => $book) { ?>
-						<option value="<?= $book_id ?>" <?= $book_id==$current ? "selected" : "" ?>><?= $book ?></option>
-					<?php } ?>
-				</select>
-			</div>
+			<select id="book_id" name="book_id">
+				<option value=""></option>
+				<?php $current = $this->getValue("book_id", -1);
+				foreach ($this->books as $book_id => $book) { ?>
+					<option value="<?= $book_id ?>" <?= $book_id==$current ? "selected" : "" ?>><?= $book ?></option>
+				<?php } ?>
+			</select>
 		</li>
 		<li class="fleft dib">
 			<?= $this->printLabel("page", self::REQUIRED); ?>

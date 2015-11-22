@@ -28,6 +28,11 @@ class SpiritsEntity extends AbstractEntity
     protected $attributes = [];
     protected $skills = [];
     protected $powers = [];
+				
+				// finally, spirits are also a part of specific traditions, so we'll need to
+				// have a property availbale to store those data.
+				
+				protected $traditions = [];
 
     public function __construct(array $data = [])
     {

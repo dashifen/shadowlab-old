@@ -12,7 +12,7 @@
 	<ol>
 		<li>
 			<label for="name">Search by ritual</label>
-			<input type="text" id="name" name="name" value="" class="w25">
+			<input type="text" id="name" name="name" value="" class="w15">
 		</li>
 		<li>
 			<label for="tags">Show<span  class="visuallyhidden"> Tags</span></label>
@@ -22,6 +22,19 @@
 					<option value="<?= $id ?>"><?= $tag ?></option>
 				<?php } ?>
 			</select>
+		</li>
+		<li>
+						<label for="prereqs" class="visuallyhidden">Show Prerequisites</label>
+						<select id="prereqs" name="prereqs" class="w15">
+										<option value="all">All Prerequisites</option>
+										<?php foreach($this->prereqs as $group => $list) { ?>
+														<optgroup label="<?= ucfirst($group) ?>">
+																		<?php foreach($list as $prereq) { ?>
+																								<option value="<?=str_replace(" ", "_", $prereq)?>"><?=$prereq?></option>
+																		<?php } ?>
+														</optgroup>
+										<?php } ?>
+						</select>
 		</li>
 		<li>
 			<label for="book" class="visuallyhidden">Show Books</label>
@@ -49,33 +62,43 @@
 	<tbody>
 		<?php foreach($this->rituals as $i => $ritual) {
 			$row = uniqid("ritual_");
-			extract($ritual); ?>
+			extract($ritual);
 			
-			<tr class="b summary <?= $i%2==0?"odd":"even" ?>"
-				data-tags-list="<?= join(",", array_keys($ritual_tags)) ?>"
-				data-book="<?= $book_id ?>"
-				data-name="<?= $ritual ?>"
-			>
-				<th scope="row" id="<?= $row ?>" headers="ritual"><a href="#"><?= $ritual ?></a></th>
-				<td headers="<?= $row ?> tags"><?= join(", ", $ritual_tags) ?></td>
-				<td headers="<?= $row ?> prereq">
-					<?php $prereqs = [];
-					if (!empty($prerequisite_metamagic)) $prereqs[] = $prerequisite_metamagic;
-					if (!empty($prerequisite_metamagic_school)) $prereqs[] = $prerequisite_metamagic_school;
-					echo sizeof($prereqs)==0 ? "&nbsp;" : join("<br>", $prereqs); ?>
-				</td>
-				<td headers="<?= $row ?> length"><?= ucfirst($length) ?></td>
+			$prereqs = [];
+			if (!empty($prerequisite_metamagic)) {
+							$prereqs[] = $prerequisite_metamagic;
+			}
+			
+			if (!empty($prerequisite_metamagic_school)) {
+							$prereqs[] = $prerequisite_metamagic_school;
+			}
+			
+			if (!empty($prerequisite_ritual)) {
+							$prereqs[] = $prerequisite_ritual;
+			} ?>
+
+				<tr class="b summary <?= $i%2==0?"odd":"even" ?>"
+								data-tags-list="<?= join(",", array_keys($ritual_tags)) ?>"
+								data-prereqs-list="<?= join(",", array_map(function($x) { return str_replace(" ", "_", $x); }, $prereqs)) ?>"
+								data-book="<?= $book_id ?>"
+								data-name="<?= $ritual ?>"
+				>
+								<th scope="row" id="<?= $row ?>" headers="ritual"><a href="#"><?= $ritual ?></a></th>
+								<td headers="<?= $row ?> tags"><?= join(", ", $ritual_tags) ?></td>
+								<td headers="<?= $row ?> prereq"><?php echo sizeof($prereqs)==0 ? "&nbsp;" : join("<br>", $prereqs); ?></td>
+								<td headers="<?= $row ?> length"><?= ucfirst($length) ?></td>
 			</tr>
-			<tr class="b description hidden <?= $i%2==0?"odd":"even"?>"
-				data-tags-list="<?= join(",", array_keys($ritual_tags)) ?>"
-				data-book="<?= $book_id ?>"
-				data-name="<?= $ritual ?>"
-			>
-				<td colspan="8">
-					<div id="<?= strtolower(preg_replace("/[\s\W]+/", "_", $ritual)) ?>">
-						<p><?= nl2br($description) ?></p><p>(p. <?= $page ?>, <?= $abbr ?>)</p>
-					</div>
-				</td>
+				<tr class="b description hidden <?= $i%2==0?"odd":"even"?>"
+								data-tags-list="<?= join(",", array_keys($ritual_tags)) ?>"
+								data-prereqs-list="<?= join(",", array_map(function($x) { return str_replace(" ", "_", $x); }, $prereqs)) ?>"
+								data-book="<?= $book_id ?>"
+								data-name="<?= $ritual ?>"
+				>
+								<td colspan="8">
+												<div id="<?= strtolower(preg_replace("/[\s\W]+/", "_", $ritual)) ?>">
+																<p><?= nl2br($description) ?></p><p>(p. <?= $page ?>, <?= $abbr ?>)</p>
+												</div>
+								</td>
 			</tr>
 		<?php } ?>
 	</tbody>

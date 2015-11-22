@@ -19,11 +19,11 @@ class Router
     /**
      * @var string
      */
-    protected $path   = '';
+    protected $path = '';
     /**
      * @var string
      */
-    protected $type   = '';
+    protected $method = '';
 
     /**
      * @param Values $server
@@ -32,7 +32,7 @@ class Router
      */
     public function __construct(Values $server, array $routes = [])
     {
-        $this->type = $server->get("REQUEST_METHOD");
+        $this->method = $server->get("REQUEST_METHOD");
         $this->path = parse_url($server->get("REQUEST_URI"), PHP_URL_PATH);
         foreach ($routes as $route) $this->addRoute($route);
     }
@@ -48,9 +48,9 @@ class Router
     /**
      * @return string
      */
-    public function getType()
+    public function getMethod()
     {
-        return $this->type;
+        return $this->method;
     }
 
     /**
@@ -64,22 +64,31 @@ class Router
         // the other uses POST.  luckily, we have a matchRoute() method for our Route objects which we can
         // use to be sure we don't have a problem right from the get-go.
 
-        foreach ($this->routes as $route) {
-            if ($new_route->matchRoute($route)) {
-                throw new RouteException("Duplicate route", $route);
+        foreach ($this->routes as $methods) {
+            foreach ($methods as $route) {
+                if ($new_route->matchRoute($route)) {
+                    throw new RouteException("Duplicate route", $new_route);
+                }
             }
         }
 
-        $this->routes[$new_route->getPath()] = $new_route;
+        $path = $new_route->getPath();
+        $method = $new_route->getMethod();
+
+        if (!isset($this->routes[$path])) {
+            $this->routes[$path] = [];
+        }
+
+        $this->routes[$path][$method] = $new_route;
     }
 
     /**
-     * @return bool|Routes\GetRoute|Routes\PostRoute
+     * @return bool|\Shadowlab\Interfaces\Route\AbstractRoute
      */
     public function getRoute()
     {
-        return isset($this->routes[$this->path])
-            ? $this->routes[$this->path]
+        return isset($this->routes[$this->path][$this->method])
+            ? $this->routes[$this->path][$this->method]
             : false;
     }
 }

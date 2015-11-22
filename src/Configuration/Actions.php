@@ -113,6 +113,40 @@ class Actions extends Config
         ];
 
         /*
+         * GEAR SHEETS
+         */
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Gear\Entry\Vehicles'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Vehicles\Vehicles'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Gear\Entry\Vehicles')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Gear\Vehicles'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Vehicles\Vehicles'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Gear\Vehicles')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Gear\Entry\Weapons'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Weapons\Weapons'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Gear\Entry\Weapons')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Gear\Weapons'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\Weapons\Weapons'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Gear\Weapons')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Gear\Entry\WeaponAccessories'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessories'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Gear\Entry\WeaponAccessories')
+        ];
+
+        $di->params['Shadowlab\Actions\Cheatsheets\Gear\WeaponAccessories'] = [
+            'domain' => $di->lazyNew('Shadowlab\Domains\Cheatsheets\Gear\WeaponAccessories\WeaponAccessories'),
+            'http'   => $di->lazyNew('Shadowlab\Responses\Cheatsheets\Gear\WeaponAccessories')
+        ];
+
+        /*
          * MAGIC SHEETS
          */
 
