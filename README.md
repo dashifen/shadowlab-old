@@ -1,5 +1,7 @@
 # ShadowLab
 
+NOTE: as of October 2016, this one's pretty much done.  I learned a lot while playing around with these techniques, but they're not, at this time, professionally relevant to me.  So, I renamed the repo shadowlab-old so that I wouldn't lose it, and the other repo named shadowlab will represent the forward motion of the project using a similar framework to one that I do employ professionally.  One that's a lot less SOLID than this one, but also one that I and the others on my team understand a bit better.
+
 An application reading from a private database of information related to the table-top roleplaying 
 game Shadowrun Fifth Edition for my use during game mastering sessions. Yes, I'm really this much 
 of a nerd.
